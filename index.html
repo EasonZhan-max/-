@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eason | 个人博客</title>
+  <meta name="description" content="Eason 的个人博客、音乐、日常与公告。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <style>
+    :root{
+      --mist:#9fb9c9;
+      --mist-2:#c9dbe6;
+      --mist-3:#edf6fb;
+      --pink:#f0b8bc;
+      --text:#24313a;
+      --muted:#6f7d86;
+      --card:rgba(255,255,255,.78);
+      --card-solid:#ffffff;
+      --line:rgba(121,152,169,.22);
+      --shadow:0 18px 50px rgba(89,124,145,.18);
+      --bg:#f9fdff;
+      --glass:blur(18px) saturate(145%);
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --mist:#8ab0c8;
+        --mist-2:#567789;
+        --mist-3:#17232c;
+        --pink:#df9ba3;
+        --text:#edf7fb;
+        --muted:#a8bbc6;
+        --card:rgba(18,25,31,.74);
+        --card-solid:#121a22;
+        --line:rgba(180,214,233,.13);
+        --shadow:0 18px 50px rgba(0,0,0,.32);
+        --bg:#091018;
+      }
+    }
+    html[data-theme="light"]{
+      --mist:#9fb9c9;--mist-2:#c9dbe6;--mist-3:#edf6fb;--pink:#f0b8bc;--text:#24313a;--muted:#6f7d86;--card:rgba(255,255,255,.78);--card-solid:#ffffff;--line:rgba(121,152,169,.22);--shadow:0 18px 50px rgba(89,124,145,.18);--bg:#f9fdff;
+    }
+    html[data-theme="dark"]{
+      --mist:#8ab0c8;--mist-2:#567789;--mist-3:#17232c;--pink:#df9ba3;--text:#edf7fb;--muted:#a8bbc6;--card:rgba(18,25,31,.74);--card-solid:#121a22;--line:rgba(180,214,233,.13);--shadow:0 18px 50px rgba(0,0,0,.32);--bg:#091018;
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;background:radial-gradient(circle at top left,rgba(159,185,201,.35),transparent 38%),linear-gradient(180deg,var(--bg),var(--mist-3));color:var(--text);min-height:100vh;overflow-x:hidden} a{color:inherit;text-decoration:none} img{display:block;max-width:100%}
+    #stars{position:fixed;inset:0;z-index:-2;background:transparent}.mist-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}.mist-bg::before,.mist-bg::after{content:"";position:absolute;width:46vw;height:46vw;border-radius:50%;filter:blur(50px);opacity:.32;animation:float 16s ease-in-out infinite}.mist-bg::before{background:var(--mist);left:-10vw;top:8vh}.mist-bg::after{background:var(--pink);right:-12vw;bottom:8vh;animation-delay:-8s}@keyframes float{50%{transform:translate(6vw,-4vh) scale(1.08)}}
+    .nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);width:min(1180px,calc(100% - 28px));height:68px;border:1px solid var(--line);background:rgba(255,255,255,.54);backdrop-filter:var(--glass);border-radius:24px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;z-index:20;box-shadow:var(--shadow)}html[data-theme="dark"] .nav{background:rgba(9,16,24,.55)}@media (prefers-color-scheme: dark){.nav{background:rgba(9,16,24,.55)}}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.5px}.brand img{width:42px;height:42px;border-radius:12px;object-fit:cover;border:1px solid rgba(255,255,255,.6)}.brand span{font-size:20px}.nav-links{display:flex;gap:24px;font-weight:700;color:var(--muted)}.nav-links a:hover{color:var(--text)}.nav-actions{display:flex;align-items:center;gap:10px}.search{height:42px;width:210px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.46);padding:0 14px;color:var(--text);outline:none}.icon-btn{width:42px;height:42px;border:1px solid var(--line);border-radius:15px;background:var(--card);color:var(--text);cursor:pointer;font-size:18px}.mobile-menu{display:none}
+    .hero{min-height:100vh;display:grid;place-items:center;padding:120px 18px 60px}.hero-card{width:min(1120px,100%);min-height:72vh;border:1px solid var(--line);border-radius:34px;overflow:hidden;position:relative;box-shadow:var(--shadow);background:var(--card-solid)}.hero-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(12,20,28,.48));pointer-events:none}.hero-img{width:100%;height:72vh;object-fit:cover}.hero-text{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;text-align:center;width:min(760px,92%);padding:26px;border-radius:28px;background:rgba(255,255,255,.22);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.28)}.hero-text h1{font-size:clamp(48px,8vw,100px);line-height:1;margin:0 0 14px;text-shadow:0 10px 32px rgba(0,0,0,.28);color:#fff;letter-spacing:3px}.type-line{min-height:34px;color:#fff;font-size:clamp(16px,2.5vw,24px);font-weight:700;text-shadow:0 6px 22px rgba(0,0,0,.38)}.cursor{display:inline-block;margin-left:4px;animation:blink .8s infinite}@keyframes blink{50%{opacity:0}}
+    .wrap{width:min(1180px,calc(100% - 28px));margin:0 auto 70px;display:grid;grid-template-columns:290px 1fr;gap:24px;align-items:start}.sidebar{position:sticky;top:105px;display:grid;gap:18px}.panel{border:1px solid var(--line);background:var(--card);backdrop-filter:var(--glass);border-radius:24px;padding:18px;box-shadow:var(--shadow)}.profile-cover{height:145px;border-radius:18px;background:linear-gradient(135deg,var(--mist),var(--mist-2));display:grid;place-items:center;overflow:hidden}.profile-cover img{width:100%;height:100%;object-fit:cover;image-rendering:auto}.profile{text-align:center}.profile .avatar{width:88px;height:88px;border-radius:26px;margin:-44px auto 12px;border:4px solid var(--card-solid);object-fit:cover;box-shadow:0 12px 28px rgba(0,0,0,.16)}.profile h2{margin:0;font-size:25px}.profile p{margin:8px 0 16px;color:var(--muted)}.douyin{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--mist),#b8cedb);color:white;border:none;border-radius:15px;padding:12px 18px;font-weight:800}.panel-title{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-size:20px}.panel-title::before{content:"";width:5px;height:24px;border-radius:8px;background:linear-gradient(var(--pink),var(--mist))}.notice p{color:var(--muted);line-height:1.8;margin:0}.notice .more{margin-top:14px;display:inline-block;padding:10px 16px;border-radius:14px;background:rgba(159,185,201,.16);color:var(--text);font-weight:700}.music-player{display:grid;gap:12px}.now{font-weight:800}.music-controls{display:flex;align-items:center;gap:10px}.music-controls button{width:42px;height:42px;border:0;border-radius:14px;background:var(--mist);color:white;font-size:16px;cursor:pointer}.range{width:100%;accent-color:var(--mist)}.file-label{display:block;text-align:center;padding:10px;border:1px dashed var(--line);border-radius:14px;color:var(--muted);cursor:pointer}.file-label input{display:none}.stats-mini{display:grid;grid-template-columns:1fr 1fr;gap:10px}.statbox{padding:12px;border-radius:16px;background:rgba(159,185,201,.13)}.statbox b{display:block;font-size:22px}.statbox span{color:var(--muted);font-size:12px}
+    .content{display:grid;gap:22px}.tabs{display:flex;gap:10px;flex-wrap:wrap;border:1px solid var(--line);background:var(--card);backdrop-filter:var(--glass);border-radius:24px;padding:14px;box-shadow:var(--shadow)}.tab{border:1px solid var(--line);background:rgba(255,255,255,.24);border-radius:14px;padding:10px 16px;font-weight:750;color:var(--muted)}.tab.active{background:var(--mist);color:white}.posts{display:grid;grid-template-columns:1fr 1fr;gap:22px}.post{border:1px solid var(--line);background:var(--card);backdrop-filter:var(--glass);border-radius:24px;overflow:hidden;box-shadow:var(--shadow);transition:.25s}.post:hover{transform:translateY(-5px)}.post-thumb{height:220px;background:linear-gradient(135deg,var(--mist-2),var(--mist));position:relative;overflow:hidden}.post-thumb::before{content:"";position:absolute;inset:18px;border-radius:20px;border:1px solid rgba(255,255,255,.35)}.post:nth-child(1) .post-thumb{background:linear-gradient(135deg,#d9e8ef,#b5cad6)}.post:nth-child(2) .post-thumb{background:linear-gradient(135deg,#f6d6da,#b6cddd)}.post:nth-child(3) .post-thumb{background:linear-gradient(135deg,#cfe4ef,#f2e1e4)}.post:nth-child(4) .post-thumb{background:linear-gradient(135deg,#eaf5fa,#9fb9c9)}.post-body{padding:18px}.post h3{font-size:24px;margin:0 0 10px}.meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:14px;margin-bottom:12px}.post p{color:var(--muted);line-height:1.7;margin:0 0 14px}.tags{display:flex;gap:8px;flex-wrap:wrap}.tags span{padding:8px 11px;border-radius:12px;background:rgba(159,185,201,.16);color:var(--muted);font-weight:700;font-size:13px}.site-footer{width:min(1180px,calc(100% - 28px));margin:0 auto 34px;border:1px solid var(--line);background:var(--card);backdrop-filter:var(--glass);border-radius:26px;padding:22px;box-shadow:var(--shadow)}.footer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.footer-stat{padding:18px;border-radius:18px;background:rgba(159,185,201,.13);text-align:center}.footer-stat strong{font-size:26px;display:block}.footer-stat span{font-size:13px;color:var(--muted)}.copyright{text-align:center;color:var(--muted);margin:18px 0 0}.backtop{position:fixed;right:22px;bottom:22px;width:48px;height:48px;border-radius:17px;border:1px solid var(--line);background:var(--card);backdrop-filter:var(--glass);color:var(--text);box-shadow:var(--shadow);cursor:pointer;font-size:20px;z-index:30}.hidden{display:none!important}
+    @media (max-width:900px){.nav{height:auto;padding:12px}.nav-links,.search{display:none}.mobile-menu{display:inline-grid}.hero-card,.hero-img{min-height:68vh;height:68vh}.wrap{grid-template-columns:1fr}.sidebar{position:static}.posts{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}.nav-actions{gap:6px}.icon-btn{width:38px;height:38px}.hero-text{padding:18px}.panel{border-radius:20px}.post-thumb{height:170px}}
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas><div class="mist-bg"></div>
+  <header class="nav">
+    <a class="brand" href="#top"><img src="assets/images/avatar.jpeg" alt="Eason头像"><span>Eason</span></a>
+    <nav class="nav-links"><a href="#home">主页</a><a href="#posts">博客</a><a href="#music">音乐</a><a href="#notice">公告</a><a href="#data">数据</a></nav>
+    <div class="nav-actions"><input class="search" id="searchInput" placeholder="搜索文章"><button class="icon-btn" id="musicQuick" title="播放/暂停">♪</button><button class="icon-btn" id="themeBtn" title="深色/浅色">☾</button><button class="icon-btn mobile-menu" onclick="document.querySelector('#posts').scrollIntoView()">☰</button></div>
+  </header>
+  <main id="top">
+    <section class="hero" id="home"><div class="hero-card"><img class="hero-img" src="assets/images/hero.jpeg" alt="Eason博客首页图"><div class="hero-text"><h1>Eason</h1><div class="type-line"><span id="typeText"></span><span class="cursor">|</span></div></div></div></section>
+    <section class="wrap" id="posts">
+      <aside class="sidebar">
+        <div class="panel profile"><div class="profile-cover"><img src="assets/images/avatar.jpeg" alt="Eason头像"></div><img class="avatar" src="assets/images/avatar.jpeg" alt="Eason头像"><h2>Eason</h2><p>在雾蓝星辰里记录日常。</p><a class="douyin" href="#" title="把链接换成你的抖音主页">抖音：@这里改成你的抖音号</a></div>
+        <div class="panel notice" id="notice"><h3 class="panel-title">公告</h3><p>欢迎来到我的数字花园。这里会放我的日常、相册、音乐、想法和一些小作品。</p><a class="more" href="#">了解更多</a></div>
+        <div class="panel" id="music"><h3 class="panel-title">音乐</h3><div class="music-player"><div class="now" id="songName">未添加音乐</div><audio id="audio" preload="metadata"></audio><input class="range" id="progress" type="range" value="0" min="0" max="100"><div class="music-controls"><button id="prevBtn">⏮</button><button id="playBtn">▶</button><button id="nextBtn">⏭</button></div><label class="file-label">本地选择音乐<input id="musicFile" type="file" accept="audio/*"></label></div></div>
+        <div class="panel"><h3 class="panel-title">小数据</h3><div class="stats-mini"><div class="statbox"><b id="visitorNo">1</b><span>你是第几位访客</span></div><div class="statbox"><b id="daysRun">1</b><span>建站天数</span></div></div></div>
+      </aside>
+      <section class="content">
+        <div class="tabs"><span class="tab active">首页</span><span class="tab">日常碎片</span><span class="tab">灵感记录</span><span class="tab">音乐收藏</span><span class="tab">相册</span></div>
+        <div class="posts" id="postList">
+          <article class="post" data-title="雾蓝色的第一篇日记"><div class="post-thumb"></div><div class="post-body"><h3>雾蓝色的第一篇日记</h3><div class="meta"><span>📅 2026-06-04</span><span>📁 日常</span></div><p>把生活里柔软的瞬间收集起来，像星星一样慢慢闪烁。</p><div class="tags"><span>#Eason</span><span>#日记</span><span>#雾蓝</span></div></div></article>
+          <article class="post" data-title="今天也要向前一点点"><div class="post-thumb"></div><div class="post-body"><h3>今天也要向前一点点</h3><div class="meta"><span>📅 2026-06-04</span><span>📁 励志</span></div><p>不用一口气变得很厉害，只要每天比昨天更靠近目标。</p><div class="tags"><span>#成长</span><span>#记录</span></div></div></article>
+          <article class="post" data-title="我的音乐角落"><div class="post-thumb"></div><div class="post-body"><h3>我的音乐角落</h3><div class="meta"><span>📅 2026-06-04</span><span>📁 音乐</span></div><p>这里可以放我喜欢的歌，让网页拥有自己的背景心情。</p><div class="tags"><span>#音乐</span><span>#播放器</span></div></div></article>
+          <article class="post" data-title="相册和故事"><div class="post-thumb"></div><div class="post-body"><h3>相册和故事</h3><div class="meta"><span>📅 2026-06-04</span><span>📁 相册</span></div><p>照片会记住很多话，往后每一张图都可以变成一篇文章。</p><div class="tags"><span>#相册</span><span>#生活</span></div></div></article>
+        </div>
+      </section>
+    </section>
+  </main>
+  <footer class="site-footer" id="data"><div class="footer-grid"><div class="footer-stat"><strong id="visitFooter">1</strong><span>访客编号</span></div><div class="footer-stat"><strong>4</strong><span>文章数量</span></div><div class="footer-stat"><strong id="runFooter">1</strong><span>运行天数</span></div><div class="footer-stat"><strong id="lastVisit">今天</strong><span>最后访问</span></div></div><p class="copyright">© 2026 Eason. 由星辰、音乐和日常组成。</p></footer>
+  <button class="backtop" onclick="scrollTo({top:0,behavior:'smooth'})">⌂</button>
+  <script>
+    const SITE_START_DATE = '2026-06-04';
+    const typingTexts = ['慢慢来，所有热爱都会发光。','把普通日子过成自己的星河。','今天也要向喜欢的未来靠近一点。','保持热爱，奔赴下一场山海。'];
+    const playlist = [
+      // 把你的音乐文件放到 assets/music/ 文件夹，然后像这样添加：
+      // { name: '我的音乐', src: 'assets/music/song.mp3' }
+    ];
+    const root=document.documentElement, themeBtn=document.getElementById('themeBtn');
+    const savedTheme=localStorage.getItem('theme'); if(savedTheme){root.dataset.theme=savedTheme; themeBtn.textContent=savedTheme==='dark'?'☀':'☾'}
+    themeBtn.onclick=()=>{const current=root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'); const next=current==='dark'?'light':'dark'; root.dataset.theme=next; localStorage.setItem('theme',next); themeBtn.textContent=next==='dark'?'☀':'☾'};
+    let typeIndex=0,charIndex=0,deleting=false; const typeEl=document.getElementById('typeText');
+    function typeLoop(){const t=typingTexts[typeIndex]; typeEl.textContent=t.slice(0,charIndex); if(!deleting && charIndex<t.length){charIndex++; setTimeout(typeLoop,90)} else if(!deleting){deleting=true; setTimeout(typeLoop,1600)} else if(charIndex>0){charIndex--; setTimeout(typeLoop,45)} else {deleting=false; typeIndex=(typeIndex+1)%typingTexts.length; setTimeout(typeLoop,300)}} typeLoop();
+    const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d'); let stars=[]; function resize(){canvas.width=innerWidth;canvas.height=innerHeight;stars=Array.from({length:Math.min(160,Math.floor(innerWidth*innerHeight/9000))},()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.6+.3,a:Math.random(),s:Math.random()*.018+.006}))} addEventListener('resize',resize); resize(); function draw(){ctx.clearRect(0,0,canvas.width,canvas.height); for(const p of stars){p.a+=p.s; const alpha=.25+Math.abs(Math.sin(p.a))*.75; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(159,185,201,${alpha})`; ctx.fill(); p.y+=.05; if(p.y>canvas.height)p.y=0} requestAnimationFrame(draw)} draw();
+    const audio=document.getElementById('audio'),playBtn=document.getElementById('playBtn'),prevBtn=document.getElementById('prevBtn'),nextBtn=document.getElementById('nextBtn'),musicQuick=document.getElementById('musicQuick'),songName=document.getElementById('songName'),progress=document.getElementById('progress'); let songIndex=0;
+    function loadSong(i){if(!playlist.length){songName.textContent='未添加音乐';return} songIndex=(i+playlist.length)%playlist.length; audio.src=playlist[songIndex].src; songName.textContent=playlist[songIndex].name}
+    function togglePlay(){if(!audio.src && playlist.length)loadSong(0); if(!audio.src)return; audio.paused?audio.play():audio.pause()} playBtn.onclick=togglePlay; musicQuick.onclick=togglePlay; prevBtn.onclick=()=>{loadSong(songIndex-1);audio.play()}; nextBtn.onclick=()=>{loadSong(songIndex+1);audio.play()}; audio.onplay=()=>{playBtn.textContent='⏸';musicQuick.textContent='Ⅱ'}; audio.onpause=()=>{playBtn.textContent='▶';musicQuick.textContent='♪'}; audio.ontimeupdate=()=>{if(audio.duration)progress.value=audio.currentTime/audio.duration*100}; progress.oninput=()=>{if(audio.duration)audio.currentTime=progress.value/100*audio.duration}; audio.onended=()=>nextBtn.click(); loadSong(0);
+    document.getElementById('musicFile').onchange=e=>{const f=e.target.files[0]; if(!f)return; const url=URL.createObjectURL(f); playlist.push({name:f.name,src:url}); loadSong(playlist.length-1); audio.play()};
+    const searchInput=document.getElementById('searchInput'); searchInput?.addEventListener('input',()=>{const q=searchInput.value.trim().toLowerCase(); document.querySelectorAll('.post').forEach(p=>{p.classList.toggle('hidden', q && !p.dataset.title.toLowerCase().includes(q) && !p.innerText.toLowerCase().includes(q))})});
+    const key='eason-blog-visitor-no'; let visitor=localStorage.getItem(key); if(!visitor){ visitor = String(Math.floor(Date.now()/1000)%900000 + 1000); localStorage.setItem(key, visitor)} document.getElementById('visitorNo').textContent=visitor; document.getElementById('visitFooter').textContent=visitor;
+    const days=Math.max(1,Math.ceil((Date.now()-new Date(SITE_START_DATE).getTime())/86400000)); document.getElementById('daysRun').textContent=days; document.getElementById('runFooter').textContent=days; document.getElementById('lastVisit').textContent=new Date().toLocaleDateString('zh-CN');
+  </script>
+</body>
+</html>
