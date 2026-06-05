@@ -401,11 +401,11 @@
     }
 
 
-  /* ghostwriter-v15 cross-device polish */
-    .nav{transition:transform .28s cubic-bezier(.22,.8,.2,1),opacity .22s ease,background .22s ease,box-shadow .22s ease}
-    .nav.nav-collapsed-top{transform:translate(-50%,calc(-100% - 18px))!important;opacity:0!important;pointer-events:none!important}
+  /* ghostwriter-v16 nav collapse animation */
+    .nav{transform-origin:top center;will-change:transform,opacity;transition:transform .42s cubic-bezier(.22,.78,.16,1),opacity .32s ease,filter .32s ease,background .24s ease,box-shadow .24s ease}
+    .nav.nav-collapsed-top{transform:translate(-50%,calc(-100% - 20px)) scale(.96)!important;opacity:0!important;filter:blur(6px)!important;pointer-events:none!important}
     @media (max-width:900px){
-      .nav.nav-collapsed-top{transform:translate(-50%,calc(-100% - 14px))!important}
+      .nav.nav-collapsed-top{transform:translate(-50%,calc(-100% - 16px)) scale(.97)!important}
     }
     #posts{scroll-margin-top:110px}
 
@@ -580,14 +580,23 @@
     (()=>{
       const backTopBtn=document.getElementById('backTopBtn');
       const topNav=document.querySelector('.nav');
-      const updateBackTopVisibility=()=>backTopBtn?.classList.toggle('is-hidden',window.scrollY<220);
-      const updateNavVisibility=()=>topNav?.classList.toggle('nav-collapsed-top',window.scrollY<=8);
-      backTopBtn?.addEventListener('click',()=>window.scrollTo({top:0,left:0,behavior:'smooth'}));
-      window.addEventListener('scroll',updateBackTopVisibility,{passive:true});
-      window.addEventListener('scroll',updateNavVisibility,{passive:true});
-      window.addEventListener('load',updateNavVisibility);
-      updateBackTopVisibility();
-      updateNavVisibility();
+      const getScrollTop=()=>Math.max(window.scrollY||0,document.documentElement.scrollTop||0,document.body.scrollTop||0);
+      const updateBackTopVisibility=()=>backTopBtn?.classList.toggle('is-hidden',getScrollTop()<220);
+      const updateNavVisibility=()=>topNav?.classList.toggle('nav-collapsed-top',getScrollTop()<=48);
+      const syncTopUi=()=>{updateBackTopVisibility();updateNavVisibility()};
+      backTopBtn?.addEventListener('click',()=>{
+        window.scrollTo({top:0,left:0,behavior:'smooth'});
+        const forceSync=()=>requestAnimationFrame(syncTopUi);
+        forceSync();
+        setTimeout(forceSync,120);
+        setTimeout(forceSync,320);
+        setTimeout(forceSync,620);
+      });
+      window.addEventListener('scroll',syncTopUi,{passive:true});
+      window.addEventListener('resize',syncTopUi,{passive:true});
+      window.addEventListener('load',syncTopUi);
+      document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncTopUi()});
+      syncTopUi();
 
       const aboutDropdown=document.getElementById('aboutDropdown');
       const aboutDropBtn=document.getElementById('aboutDropBtn');
