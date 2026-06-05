@@ -265,6 +265,52 @@
     html[data-theme="dark"] .hue-slider{border-color:rgba(255,255,255,.08)}
     .toggle-copy strong,.toggle-copy span{display:block}
 
+  
+    /* ghostwriter-music-popover-and-reset */
+    .palette-reset{
+      height:40px;border:1px solid var(--line);border-radius:14px;
+      background:rgba(159,185,201,.14);color:var(--text);
+      padding:0 16px;font-weight:850;cursor:pointer;transition:.2s;
+    }
+    .palette-reset:hover{transform:translateY(-1px);background:rgba(159,185,201,.22)}
+    .top-music-popover{
+      position:fixed;left:50%;top:96px;transform:translateX(-50%) translateY(-10px) scale(.98);
+      width:min(560px,calc(100% - 32px));z-index:1600;opacity:0;pointer-events:none;transition:.22s ease;
+    }
+    .top-music-popover.show{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0) scale(1)}
+    .top-music-card{
+      border:1px solid rgba(255,255,255,.14);border-radius:24px;
+      background:rgba(16,18,20,.82);backdrop-filter:blur(18px) saturate(150%);
+      color:#f4f8fb;box-shadow:0 22px 60px rgba(0,0,0,.42);
+      padding:18px 22px;overflow:hidden;
+    }
+    .top-music-main{display:grid;grid-template-columns:72px minmax(0,1fr) 90px;gap:14px;align-items:center}
+    .top-music-cover{width:72px;height:72px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 6px rgba(255,255,255,.04),0 12px 30px rgba(0,0,0,.35)}
+    .top-music-title{font-size:22px;font-weight:900;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .top-music-sub{margin-top:6px;color:rgba(244,248,251,.70);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .top-music-time{margin-top:8px;color:rgba(244,248,251,.78);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:800}
+    .top-music-side{display:grid;gap:10px;justify-items:end;color:rgba(244,248,251,.75)}
+    .top-music-side button,.top-music-controls button{
+      border:0;background:transparent;color:inherit;cursor:pointer;display:grid;place-items:center;padding:0;
+    }
+    .top-music-side svg,.top-music-controls svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .top-volume{display:flex;align-items:center;gap:10px}.top-volume-bar{width:96px;height:8px;border-radius:999px;background:rgba(255,255,255,.20);overflow:hidden}.top-volume-bar:before{content:"";display:block;width:70%;height:100%;background:rgba(255,255,255,.45);border-radius:999px}
+    .top-progress{width:100%;margin:14px 0 10px;accent-color:var(--pink)}
+    .top-music-controls{display:grid;grid-template-columns:repeat(5,1fr);align-items:center;gap:8px}
+    .top-music-controls button{height:48px;border-radius:16px;color:rgba(244,248,251,.76)}
+    .top-music-controls button:hover{background:rgba(255,255,255,.08);color:#fff}
+    .top-music-controls .top-play{height:56px;width:56px;border-radius:50%;margin:auto;background:rgba(255,139,112,.28);color:#ff9b82}
+    .top-music-controls .top-play:hover{background:rgba(255,139,112,.36);color:#ffb09d}
+    @media (max-width:620px){
+      .top-music-popover{top:116px;width:min(94vw,560px)}
+      .top-music-card{padding:16px;border-radius:22px}
+      .top-music-main{grid-template-columns:60px minmax(0,1fr);gap:12px}
+      .top-music-side{grid-column:1/-1;grid-template-columns:auto 1fr;justify-items:start}
+      .top-music-cover{width:60px;height:60px}
+      .top-music-title{font-size:19px}
+      .top-volume{width:100%}.top-volume-bar{width:100%}
+    }
+
   </style>
 </head>
 <body>
@@ -367,7 +413,7 @@
 <div class="modal" id="paletteModal" aria-hidden="true">
     <div class="modal-card palette-modal-card" role="dialog" aria-modal="true">
       <button class="modal-close" type="button" data-close-modal="paletteModal" aria-label="关闭个性化调色板"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
-      <div class="palette-head"><h2>个性化调色板</h2></div>
+      <div class="palette-head"><h2>个性化调色板</h2><button class="palette-reset" id="paletteResetBtn" type="button">重置</button></div>
       <div class="palette-section">
         <div class="palette-section-title"><div class="left">主题色相</div><span class="palette-badge" id="hueValue">210</span></div>
         <div class="hue-slider-wrap">
@@ -394,6 +440,32 @@
       </div>
     </div>
   </div>
+
+  <div class="top-music-popover" id="topMusicPopover" aria-hidden="true">
+    <div class="top-music-card">
+      <div class="top-music-main">
+        <img class="top-music-cover" id="topMusicCover" src="assets/images/album-cover.jpg" alt="音乐封面">
+        <div class="top-music-info">
+          <div class="top-music-title" id="topMusicTitle">星辰不坠落</div>
+          <div class="top-music-sub" id="topMusicSub">Eason Blog / 音乐收藏</div>
+          <div class="top-music-time" id="topMusicTime">0:00 / 0:00</div>
+        </div>
+        <div class="top-music-side">
+          <button type="button" id="topMusicClose" aria-label="关闭音乐弹窗"><svg viewBox="0 0 24 24"><path d="M6 6l12 12"></path><path d="M18 6 6 18"></path></svg></button>
+          <div class="top-volume"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5z"></path><path d="M16 9.5a4 4 0 0 1 0 5"></path></svg><span class="top-volume-bar"></span></div>
+        </div>
+      </div>
+      <input class="top-progress" id="topMusicProgress" type="range" min="0" max="100" value="0">
+      <div class="top-music-controls">
+        <button type="button" id="topMusicMode" aria-label="循环模式"><svg viewBox="0 0 24 24"><path d="M17 2l4 4-4 4"></path><path d="M3 11V9a3 3 0 0 1 3-3h15"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v2a3 3 0 0 1-3 3H3"></path></svg></button>
+        <button type="button" id="topMusicPrev" aria-label="上一首"><svg viewBox="0 0 24 24"><path d="M17 6l-8 6 8 6V6z"></path><path d="M7 6v12"></path></svg></button>
+        <button type="button" class="top-play" id="topMusicPlay" aria-label="播放或暂停"><svg viewBox="0 0 24 24"><path d="M8 6l10 6-10 6V6z"></path></svg></button>
+        <button type="button" id="topMusicNext" aria-label="下一首"><svg viewBox="0 0 24 24"><path d="M7 6l8 6-8 6V6z"></path><path d="M17 6v12"></path></svg></button>
+        <button type="button" id="topMusicList" aria-label="打开歌单"><svg viewBox="0 0 24 24"><path d="M4 7h11"></path><path d="M4 12h11"></path><path d="M4 17h7"></path><path d="M18 9v9"></path><circle cx="18" cy="18" r="3"></circle></svg></button>
+      </div>
+    </div>
+  </div>
+
 
   <script>
     const SITE_START_DATE='2026-06-04';
@@ -469,5 +541,106 @@
       msgBtn?.addEventListener('click',()=>{localStorage.setItem('eason-message-draft',msg.value.trim());msgTip.textContent='已暂存在当前浏览器。'});
     })();
   </script>
+
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const paletteResetBtn = document.getElementById('paletteResetBtn');
+      paletteResetBtn?.addEventListener('click', () => {
+        ['custom-hue','custom-bg-mode','custom-show-hero-text','custom-show-stars','custom-show-meteor','custom-show-mist'].forEach(k => localStorage.removeItem(k));
+        root.classList.remove('bg-gradient','bg-night','bg-solid','custom-hide-hero-text','custom-hide-stars','custom-hide-meteor','custom-hide-mist');
+        const defaults = {
+          '--mist':'', '--mist-2':'', '--mist-3':'', '--pink':'', '--line':'', '--card':'', '--card-solid':'', '--shadow':'', '--star-rgb':''
+        };
+        Object.keys(defaults).forEach(k => root.style.removeProperty(k));
+        const hue = document.getElementById('hueSlider');
+        const hueValue = document.getElementById('hueValue');
+        if (hue) hue.value = 210;
+        if (hueValue) hueValue.textContent = '210';
+        ['toggleHeroText','toggleStars','toggleMeteor','toggleMist'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.checked = true;
+        });
+        document.querySelectorAll('[data-bg-mode]').forEach(btn => btn.classList.toggle('active', btn.dataset.bgMode === 'default'));
+        if (typeof applyAccentHue === 'function') applyAccentHue(210);
+        if (typeof applyBackgroundMode === 'function') applyBackgroundMode('default');
+        if (typeof applySwitches === 'function') applySwitches();
+      });
+
+      const pop = document.getElementById('topMusicPopover');
+      const quick = document.getElementById('musicQuick');
+      const cover = document.getElementById('topMusicCover');
+      const title = document.getElementById('topMusicTitle');
+      const sub = document.getElementById('topMusicSub');
+      const time = document.getElementById('topMusicTime');
+      const prog = document.getElementById('topMusicProgress');
+      const play = document.getElementById('topMusicPlay');
+      const prev = document.getElementById('topMusicPrev');
+      const next = document.getElementById('topMusicNext');
+      const close = document.getElementById('topMusicClose');
+      const mode = document.getElementById('topMusicMode');
+      const list = document.getElementById('topMusicList');
+      const playIcon = '<svg viewBox="0 0 24 24"><path d="M8 6l10 6-10 6V6z"></path></svg>';
+      const pauseIcon = '<svg viewBox="0 0 24 24"><path d="M9 6v12"></path><path d="M15 6v12"></path></svg>';
+
+      function fmt(sec){
+        if (!Number.isFinite(sec)) return '0:00';
+        const m = Math.floor(sec / 60), s = Math.floor(sec % 60);
+        return `${m}:${String(s).padStart(2,'0')}`;
+      }
+      function syncTopMusic(){
+        try{
+          const track = Array.isArray(playlist) ? playlist[songIndex] : null;
+          if (track) {
+            title.textContent = track.name || '音乐';
+            cover.src = track.cover || 'assets/images/album-cover.jpg';
+            sub.textContent = 'Eason Blog / 音乐收藏';
+          }
+          if (audio) {
+            time.textContent = `${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;
+            if (audio.duration && prog) prog.value = audio.currentTime / audio.duration * 100;
+            if (play) play.innerHTML = audio.paused ? playIcon : pauseIcon;
+          }
+        }catch(e){}
+      }
+      function showTopMusic(){
+        syncTopMusic();
+        pop?.classList.add('show');
+        pop?.setAttribute('aria-hidden','false');
+      }
+      function hideTopMusic(){
+        pop?.classList.remove('show');
+        pop?.setAttribute('aria-hidden','true');
+      }
+
+      quick?.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        showTopMusic();
+      }, true);
+
+      close?.addEventListener('click', hideTopMusic);
+      play?.addEventListener('click', () => { document.getElementById('playBtn')?.click(); setTimeout(syncTopMusic,60); });
+      prev?.addEventListener('click', () => { document.getElementById('prevBtn')?.click(); setTimeout(syncTopMusic,80); });
+      next?.addEventListener('click', () => { document.getElementById('nextBtn')?.click(); setTimeout(syncTopMusic,80); });
+      mode?.addEventListener('click', () => { document.getElementById('loopModeBtn')?.click(); setTimeout(syncTopMusic,80); });
+      list?.addEventListener('click', () => {
+        hideTopMusic();
+        document.getElementById('music')?.scrollIntoView({behavior:'smooth',block:'center'});
+      });
+      prog?.addEventListener('input', () => {
+        if (audio?.duration) audio.currentTime = prog.value / 100 * audio.duration;
+        syncTopMusic();
+      });
+      audio?.addEventListener('timeupdate', syncTopMusic);
+      audio?.addEventListener('play', syncTopMusic);
+      audio?.addEventListener('pause', syncTopMusic);
+      audio?.addEventListener('loadedmetadata', syncTopMusic);
+      document.addEventListener('click', e => {
+        if (pop?.classList.contains('show') && !pop.contains(e.target) && !quick?.contains(e.target)) hideTopMusic();
+      });
+    })();
+  </script>
+
 </body>
 </html>
