@@ -198,7 +198,7 @@
   
     /* ghostwriter-palette-panel */
     .palette-modal-card{width:min(640px,100%)}
-    .palette-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;padding-right:56px}
+    .palette-head{display:flex;align-items:center;justify-content:flex-start;gap:12px;margin-bottom:16px;padding-right:124px}
     .palette-head h2{margin:0;font-size:32px}
     .palette-section{margin-top:14px;padding:16px;border:1px solid var(--line);border-radius:20px;background:rgba(159,185,201,.10)}
     .palette-section-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 14px;font-size:24px;font-weight:850}
@@ -237,7 +237,7 @@
     html.bg-solid .mist-bg:before,html.bg-solid .mist-bg:after{display:none}
     @media (max-width:760px){
       .palette-modal-card{width:min(94vw,100%);padding:18px}
-      .palette-head{padding-right:48px}
+      .palette-head{padding-right:108px}
       .palette-head h2{font-size:28px}
       .palette-section{padding:14px}
       .palette-section-title{font-size:22px}
@@ -271,6 +271,7 @@
       height:40px;border:1px solid var(--line);border-radius:14px;
       background:rgba(159,185,201,.14);color:var(--text);
       padding:0 16px;font-weight:850;cursor:pointer;transition:.2s;
+      margin-left:auto;margin-right:70px;
     }
     .palette-reset:hover{transform:translateY(-1px);background:rgba(159,185,201,.22)}
     .top-music-popover{
@@ -324,7 +325,7 @@
       border-radius:24px!important;
       max-height:82vh!important;
     }
-    .palette-head{margin-bottom:10px!important;padding-right:46px!important}
+    .palette-head{margin-bottom:10px!important;padding-right:102px!important}
     .palette-head h2{font-size:26px!important}
     .palette-reset{height:36px!important;padding:0 14px!important;border-radius:12px!important}
     .palette-section{margin-top:10px!important;padding:12px!important;border-radius:16px!important}
@@ -371,11 +372,9 @@
       <section class="content">
         <div class="tabs" id="postTabs"><button class="tab active" type="button" data-filter="all">首页</button><button class="tab" type="button" data-filter="日常">日常碎片</button><button class="tab" type="button" data-filter="励志">灵感记录</button><button class="tab" type="button" data-filter="音乐">音乐收藏</button><button class="tab" type="button" data-filter="相册">相册</button></div>
         <div class="posts" id="postList">
-          <article class="post" data-title="又是安静的一天" data-category="日常" data-tags="vrchat,日常"><div class="post-thumb"><img src="assets/images/post-fishing.png" alt="VRChat钓鱼日常"></div><div class="post-body"><h3>又是安静的一天</h3><div class="meta"><span>日期 2026-05-31</span><span>分类 日常</span></div><p>又是安静的一天。</p><div class="tags"><span>#vrchat</span><span>#日常</span></div></div></article>
-          <article class="post" data-title="台风特别播报" data-category="相册" data-tags="相册"><div class="post-thumb"><img src="assets/images/post-typhoon.jpg" alt="VRC新闻台风特别播报"></div><div class="post-body"><h3>台风特别播报</h3><div class="meta"><span>日期 2026-06-02</span><span>分类 相册</span></div><p>把这一张有趣的 VRC 新闻画面收进相册里。</p><div class="tags"><span>#相册</span></div></div></article><article class="post" data-title="猫猫猫猫猫猫猫猫猫狗猫猫" data-category="相册" data-tags="vrchat,相册"><div class="post-thumb"><img src="assets/images/post-cats.jpg" alt="猫猫合集相册"></div><div class="post-body"><h3>猫猫猫猫猫猫猫猫猫狗猫猫</h3><div class="meta"><span>日期 2026-06-02</span><span>分类 相册</span></div><p>猫猫猫猫猫猫猫猫猫狗猫猫</p><div class="tags"><span>#vrchat</span><span>#相册</span></div></div></article>
-          
-          
-          
+          <article class="post" data-title="台风特别播报" data-category="相册" data-tags="vrchat,相册"><div class="post-thumb"><img src="assets/images/post-typhoon.jpg" alt="VRC新闻台风特别播报"></div><div class="post-body"><h3>台风特别播报</h3><div class="meta"><span>日期 2026-06-02</span><span>分类 相册</span></div><p>台风特别播报</p><div class="tags"><span>#vrchat</span><span>#相册</span></div></div></article>
+          <article class="post" data-title="猫猫猫猫猫猫猫猫猫狗猫猫" data-category="相册" data-tags="vrchat,相册"><div class="post-thumb"><img src="assets/images/post-cats.jpg" alt="猫猫合集相册"></div><div class="post-body"><h3>猫猫猫猫猫猫猫猫猫狗猫猫</h3><div class="meta"><span>日期 2026-06-02</span><span>分类 相册</span></div><p>猫猫猫猫猫猫猫猫猫狗猫猫</p><div class="tags"><span>#vrchat</span><span>#相册</span></div></div></article>
+          <article class="post" data-title="又是安静的一天" data-category="日常" data-tags="vrchat,日常"><div class="post-thumb"><img src="assets/images/post-fishing.png" alt="VRChat钓鱼日常"></div><div class="post-body"><h3>又是安静的一天</h3><div class="meta"><span>日期 2026-05-31</span><span>分类 日常</span></div><p>又是安静的一天</p><div class="tags"><span>#vrchat</span><span>#日常</span></div></div></article>
         </div>
         <div class="pagination" id="pagination"></div>
       </section>
@@ -469,7 +468,7 @@
       <div class="palette-section">
         <div class="palette-section-title"><div class="left">壁纸设置</div></div>
         <div class="toggle-grid">
-          <div class="toggle-item clickable" data-toggle-target="toggleHeroText"><span class="toggle-copy"><strong>首页壁纸标题</strong><span>控制首页标题和励志文案显示</span></span><label class="switch" for="toggleHeroText"><input id="toggleHeroText" type="checkbox" checked><span class="switch-slider"></span></label></div>
+          <div class="toggle-item clickable" data-toggle-target="toggleHeroText"><span class="toggle-copy"><strong>首页壁纸标题</strong><span>控制首页标题和文案显示</span></span><label class="switch" for="toggleHeroText"><input id="toggleHeroText" type="checkbox" checked><span class="switch-slider"></span></label></div>
           <div class="toggle-item clickable" data-toggle-target="toggleStars"><span class="toggle-copy"><strong>背景星星</strong><span>控制背景星点闪烁显示效果</span></span><label class="switch" for="toggleStars"><input id="toggleStars" type="checkbox" checked><span class="switch-slider"></span></label></div>
           <div class="toggle-item clickable" data-toggle-target="toggleMeteor"><span class="toggle-copy"><strong>流星动画</strong><span>控制背景随机流星划过效果</span></span><label class="switch" for="toggleMeteor"><input id="toggleMeteor" type="checkbox" checked><span class="switch-slider"></span></label></div>
           <div class="toggle-item clickable" data-toggle-target="toggleMist"><span class="toggle-copy"><strong>雾光渐变</strong><span>控制雾蓝柔光背景层显示</span></span><label class="switch" for="toggleMist"><input id="toggleMist" type="checkbox" checked><span class="switch-slider"></span></label></div>
