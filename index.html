@@ -264,7 +264,7 @@
         <div class="panel profile"><img class="avatar-large" src="assets/images/avatar.jpeg" alt="Eason头像"><h2>Eason</h2><p>在雾蓝星辰里记录日常。</p><a class="douyin" href="https://v.douyin.com/PZZp5gCTvQs/" target="_blank" rel="noopener noreferrer">抖音</a></div>
         <div class="panel notice" id="notice" role="button" tabindex="0"><h3 class="panel-title">公告</h3><p>欢迎来到我的数字花园。这里会放我的日常、相册、音乐、想法和一些小作品。</p><a class="more" href="#aboutMe">了解更多</a></div>
         <div class="panel" id="music"><h3 class="panel-title">音乐</h3><div class="music-player"><div class="music-top"><div class="music-cover" id="albumCover"><img src="assets/images/album-cover.jpg" alt="星辰不坠落专辑封面"></div><div class="music-meta"><div class="now" id="songName">星辰不坠落</div><div class="music-sub" id="songStatus">已暂停</div></div></div><audio id="audio" preload="metadata"></audio><div class="time-row"><span id="currentTime">0:00</span><input class="range" id="progress" type="range" value="0" min="0" max="100"><span id="duration">0:00</span></div><div class="music-controls"><button class="player-btn" id="prevBtn" aria-label="上一首"><svg viewBox="0 0 24 24"><path d="M17 6l-8 6 8 6V6z"></path><path d="M7 6v12"></path></svg></button><button class="player-btn primary" id="playBtn" aria-label="播放或暂停"><svg id="playIcon" viewBox="0 0 24 24"><path d="M8 6l10 6-10 6V6z"></path></svg></button><button class="player-btn" id="nextBtn" aria-label="下一首"><svg viewBox="0 0 24 24"><path d="M7 6l8 6-8 6V6z"></path><path d="M17 6v12"></path></svg></button></div><div class="music-options"><button class="mode-btn" id="loopModeBtn" type="button">顺序播放</button><div class="playlist-dropdown" id="playlistDropdown"><button class="playlist-trigger" id="playlistTrigger" type="button" aria-label="打开歌单"><img class="playlist-thumb" id="playlistThumb" src="assets/images/album-cover.jpg" alt="当前歌曲专辑封面"><div class="playlist-trigger-text"><small>歌单</small><strong id="playlistTriggerName">星辰不坠落</strong><span id="playlistTriggerAlbum">专辑《星辰不坠落》</span></div><span class="playlist-caret">⌄</span></button><div class="playlist-menu" id="playlistMenu"></div></div></div></div></div>
-        <div class="panel"><h3 class="panel-title">小数据</h3><div class="stats-mini"><div class="statbox"><b id="visitorNo">1</b><span>你是第几位访客</span></div><div class="statbox"><b id="daysRun">1</b><span>建站天数</span></div></div></div>
+
         <div class="panel"><h3 class="panel-title">分类</h3><div class="category-list" id="categoryStats"></div></div>
         <div class="panel"><h3 class="panel-title">标签统计</h3><div class="tag-cloud-stats" id="tagStats"></div></div>
       </aside>
@@ -347,6 +347,43 @@
       </div>
     </div>
   </div>
+<div class="modal" id="paletteModal" aria-hidden="true">
+    <div class="modal-card palette-modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close" type="button" data-close-modal="paletteModal" aria-label="关闭个性化调色板"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+      <div class="palette-head"><h2>个性化调色板</h2></div>
+      <div class="palette-section">
+        <div class="palette-section-title"><div class="left">主题色相</div><span class="palette-badge" id="hueValue">210</span></div>
+        <div class="hue-slider-wrap">
+          <input class="hue-slider" id="hueSlider" type="range" min="0" max="360" step="1" value="210">
+        </div>
+      </div>
+      <div class="palette-section">
+        <div class="palette-section-title"><div class="left">背景模式</div></div>
+        <div class="preset-grid" id="bgModeGroup">
+          <button class="preset-btn active" type="button" data-bg-mode="default">雾蓝默认</button>
+          <button class="preset-btn" type="button" data-bg-mode="gradient">柔和渐变</button>
+          <button class="preset-btn" type="button" data-bg-mode="night">深夜星空</button>
+          <button class="preset-btn" type="button" data-bg-mode="solid">纯色背景</button>
+        </div>
+      </div>
+      <div class="palette-section">
+        <div class="palette-section-title"><div class="left">壁纸设置</div></div>
+        <div class="toggle-grid">
+          <button class="toggle-item" type="button" id="toggleHeroTextBtn"><span class="toggle-copy"><strong>首页壁纸标题</strong><span>控制首页标题和励志文案显示</span></span><label class="switch"><input id="toggleHeroText" type="checkbox" checked><span class="switch-slider"></span></label></button>
+          <button class="toggle-item" type="button" id="toggleMeteorBtn"><span class="toggle-copy"><strong>流星动画</strong><span>控制背景随机流星划过效果</span></span><label class="switch"><input id="toggleMeteor" type="checkbox" checked><span class="switch-slider"></span></label></button>
+          <button class="toggle-item" type="button" id="toggleMistBtn"><span class="toggle-copy"><strong>雾光渐变</strong><span>控制雾蓝柔光背景层显示</span></span><label class="switch"><input id="toggleMist" type="checkbox" checked><span class="switch-slider"></span></label></button>
+        </div>
+      </div>
+      <div class="palette-section">
+        <div class="palette-section-title"><div class="left">文章布局</div></div>
+        <div class="layout-grid" id="layoutModeGroup">
+          <button class="layout-btn" type="button" data-layout-mode="list">列表</button>
+          <button class="layout-btn active" type="button" data-layout-mode="grid">网格</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const SITE_START_DATE='2026-06-04';
     const typingTexts=['慢慢来，所有热爱都会发光。','把普通日子过成自己的星河。','今天也要向喜欢的未来靠近一点。','保持热爱，奔赴下一场山海。'];
@@ -422,42 +459,22 @@
     })();
   </script>
 
-  <div class="modal" id="paletteModal" aria-hidden="true">
-    <div class="modal-card palette-modal-card" role="dialog" aria-modal="true">
-      <button class="modal-close" type="button" data-close-modal="paletteModal" aria-label="关闭个性化调色板"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
-      <div class="palette-head"><h2>个性化调色板</h2></div>
-      <div class="palette-section">
-        <div class="palette-section-title"><div class="left">主题色相</div><span class="palette-badge" id="hueValue">210</span></div>
-        <div class="hue-slider-wrap">
-          <input class="hue-slider" id="hueSlider" type="range" min="0" max="360" step="1" value="210">
-        </div>
-      </div>
-      <div class="palette-section">
-        <div class="palette-section-title"><div class="left">背景模式</div></div>
-        <div class="preset-grid" id="bgModeGroup">
-          <button class="preset-btn active" type="button" data-bg-mode="default">雾蓝默认</button>
-          <button class="preset-btn" type="button" data-bg-mode="gradient">柔和渐变</button>
-          <button class="preset-btn" type="button" data-bg-mode="night">深夜星空</button>
-          <button class="preset-btn" type="button" data-bg-mode="solid">纯色背景</button>
-        </div>
-      </div>
-      <div class="palette-section">
-        <div class="palette-section-title"><div class="left">壁纸设置</div></div>
-        <div class="toggle-grid">
-          <button class="toggle-item" type="button" id="toggleHeroTextBtn"><span class="toggle-copy"><strong>首页壁纸标题</strong><span>控制首页标题和励志文案显示</span></span><label class="switch"><input id="toggleHeroText" type="checkbox" checked><span class="switch-slider"></span></label></button>
-          <button class="toggle-item" type="button" id="toggleMeteorBtn"><span class="toggle-copy"><strong>流星动画</strong><span>控制背景随机流星划过效果</span></span><label class="switch"><input id="toggleMeteor" type="checkbox" checked><span class="switch-slider"></span></label></button>
-          <button class="toggle-item" type="button" id="toggleMistBtn"><span class="toggle-copy"><strong>雾光渐变</strong><span>控制雾蓝柔光背景层显示</span></span><label class="switch"><input id="toggleMist" type="checkbox" checked><span class="switch-slider"></span></label></button>
-        </div>
-      </div>
-      <div class="palette-section">
-        <div class="palette-section-title"><div class="left">文章布局</div></div>
-        <div class="layout-grid" id="layoutModeGroup">
-          <button class="layout-btn" type="button" data-layout-mode="list">列表</button>
-          <button class="layout-btn active" type="button" data-layout-mode="grid">网格</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{
+      const btn=document.getElementById('paletteBtn');
+      const modal=document.getElementById('paletteModal');
+      if(btn&&modal){
+        btn.addEventListener('click',()=>{
+          modal.classList.add('show');
+          modal.setAttribute('aria-hidden','false');
+          document.body.classList.add('modal-open');
+        });
+      }
+    });
+  </script>
 
 </body>
 </html>
