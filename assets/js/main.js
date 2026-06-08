@@ -250,15 +250,28 @@ function initNavigation() {
     [80, 220, 460, 760].forEach((delay) => setTimeout(sync, delay));
   });
   $$('[data-scroll-target]').forEach((btn) => btn.addEventListener('click', () => $(btn.dataset.scrollTarget)?.scrollIntoView({ behavior: 'smooth' })));
+  const closeNavDropdown = (drop) => {
+    drop.classList.remove('open');
+    $('.nav-drop-btn', drop)?.setAttribute('aria-expanded', 'false');
+  };
   $$('.nav-dropdown').forEach((drop) => {
     const btn = $('.nav-drop-btn', drop);
+    const menu = $('.nav-dropdown-menu', drop);
     btn?.addEventListener('click', (event) => {
+      event.preventDefault();
       event.stopPropagation();
-      drop.classList.toggle('open');
-      btn.setAttribute('aria-expanded', String(drop.classList.contains('open')));
+      const shouldOpen = !drop.classList.contains('open');
+      $$('.nav-dropdown.open').forEach((other) => closeNavDropdown(other));
+      if (shouldOpen) {
+        drop.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
     });
+    menu?.addEventListener('click', () => closeNavDropdown(drop));
   });
-  document.addEventListener('click', () => $$('.nav-dropdown.open').forEach((drop) => drop.classList.remove('open')));
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.nav-dropdown')) $$('.nav-dropdown.open').forEach((drop) => closeNavDropdown(drop));
+  });
   sync();
 }
 
@@ -475,8 +488,11 @@ function initModals() {
 
 function initFooterStats() {
   const days = Math.max(1, Math.ceil((Date.now() - new Date(CONFIG.siteStartDate).getTime()) / 86400000));
+  const articleCount = $$('.post').length;
   $('#runFooter') && ($('#runFooter').textContent = String(days));
   $('#lastVisit') && ($('#lastVisit').textContent = new Date().toLocaleDateString('zh-CN'));
+  $('#siteInfoArticleCount') && ($('#siteInfoArticleCount').textContent = String(articleCount));
+  $('#siteInfoRunDays') && ($('#siteInfoRunDays').textContent = String(days));
 }
 
 document.addEventListener('DOMContentLoaded', () => {

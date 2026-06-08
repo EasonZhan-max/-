@@ -430,3 +430,119 @@ body.modal-open { overflow: hidden; }
   .palette-section { padding: 10px; }
   .preset-grid { gap: 8px; }
 }
+
+/* 13 V28 Fixes
+   说明：修复调色板按钮位置、下拉菜单点击收起、本站信息卡片。 */
+.site-info-card { scroll-margin-top: 112px; }
+.site-info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.site-info-grid div {
+  min-height: 84px;
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(159,185,201,.12);
+}
+.site-info-grid strong { font-size: 20px; }
+.site-info-grid span,
+.site-info-note { color: var(--muted); }
+
+/* 顶部栏下拉：改为点击控制，防止 hover 导致再点不收起 */
+.nav-dropdown:not(.open):hover .nav-dropdown-menu {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(8px);
+}
+.nav-dropdown-menu {
+  visibility: hidden;
+  z-index: 9999;
+}
+.nav-dropdown.open .nav-dropdown-menu {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+@media (max-width: 1000px) {
+  .nav-dropdown:not(.open):hover .nav-dropdown-menu { transform: translateY(8px); }
+  .nav-dropdown.open .nav-dropdown-menu { transform: translateY(0); }
+}
+
+/* 调色板：重置和关闭按钮分开，避免重叠 */
+.palette-modal-card {
+  width: min(460px, 92vw) !important;
+  max-height: 82vh !important;
+  padding: 14px !important;
+  overflow: auto !important;
+}
+.palette-modal-card > .modal-close {
+  top: 14px !important;
+  right: 14px !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 14px !important;
+  z-index: 5 !important;
+}
+.palette-head {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  min-height: 42px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding: 0 108px 0 0 !important;
+  margin: 0 0 10px !important;
+}
+.palette-head h2 {
+  font-size: clamp(20px, 4.6vw, 24px) !important;
+  line-height: 1.12 !important;
+  white-space: nowrap !important;
+}
+.palette-reset {
+  position: absolute !important;
+  top: 2px !important;
+  right: 54px !important;
+  height: 36px !important;
+  padding: 0 12px !important;
+  border-radius: 13px !important;
+  margin: 0 !important;
+  z-index: 4 !important;
+}
+@media (max-width: 680px) {
+  .palette-modal-card {
+    width: 90vw !important;
+    max-height: 80vh !important;
+    padding: 12px !important;
+  }
+  .palette-head {
+    min-height: 40px !important;
+    padding-right: 104px !important;
+  }
+  .palette-head h2 { font-size: clamp(18px, 5.8vw, 22px) !important; }
+  .palette-reset {
+    right: 50px !important;
+    height: 34px !important;
+    padding: 0 10px !important;
+  }
+  .palette-modal-card > .modal-close {
+    top: 12px !important;
+    right: 12px !important;
+    width: 38px !important;
+    height: 38px !important;
+  }
+  .site-info-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 420px) {
+  .site-info-grid { grid-template-columns: 1fr; }
+}
+
