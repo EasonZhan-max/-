@@ -168,9 +168,6 @@ html.custom-hide-hero-text .hero-text { display: none; }
 .panel { padding: 18px; }
 .profile { text-align: center; padding-top: 20px; }
 .avatar-large { width: 180px; height: 180px; object-fit: cover; border-radius: 30px; margin: 0 auto 18px; border: 1px solid rgba(255,255,255,.35); }
-.avatar-link { display: inline-block; border-radius: 30px; cursor: pointer; transition: transform .22s ease, filter .22s ease; }
-.avatar-link:hover { transform: translateY(-2px) scale(1.015); filter: brightness(1.08); }
-.avatar-link:active { transform: scale(.98); }
 .profile h2 { margin: 0; font-size: 25px; }
 .profile p, .notice p, .post p, .info-card p { color: var(--muted); line-height: 1.75; }
 .douyin { display: inline-flex; justify-content: center; align-items: center; width: 100%; padding: 14px 18px; border-radius: 15px; background: linear-gradient(135deg, var(--mist), #b8cedb); color: #fff; font-weight: 900; }
@@ -682,3 +679,9 @@ body.modal-open .backtop {
     padding-right: 96px !important;
   }
 }
+
+/* 头像跳转：左侧大头像点击到关于我 */
+.avatar-link { display: inline-block; border-radius: 30px; line-height: 0; transition: transform .2s ease, filter .2s ease; }
+.avatar-link:hover { transform: translateY(-2px) scale(1.02); filter: brightness(1.08); }
+.avatar-link:active { transform: scale(.98); }
+.avatar-link .avatar-large { display: block; margin-bottom: 18px; }
