@@ -8,7 +8,7 @@
   05 Navigation    顶部栏收起、下拉菜单、返回顶部
   06 Music         音乐播放器与歌单
   07 PostsGallery  文章筛选、分页、相册、弹窗
-  08 Comments      本地留言箱
+  08 Reserved      预留模块
   09 Init          初始化入口
 */
 
@@ -464,36 +464,6 @@ function initPostsGallery() {
   renderPosts();
 }
 
-/* 08 Comments */
-function initComments() {
-  const storageKey = 'eason-comments-v1';
-  const list = $('#commentList');
-  const text = $('#commentText');
-  const name = $('#commentName');
-  const count = $('#commentCount');
-  const load = () => JSON.parse(localStorage.getItem(storageKey) || '[]');
-  const save = (items) => localStorage.setItem(storageKey, JSON.stringify(items));
-  const render = () => {
-    const items = load();
-    $('#commentTotal') && ($('#commentTotal').textContent = String(items.length));
-    list.innerHTML = items.length ? items.map((item) => `<div class="comment-item"><strong>${safeText(item.name)}</strong><p>${safeText(item.text)}</p><small>${safeText(item.time)}</small></div>`).join('') : '<p class="music-sub">还没有留言，来当第一个吧。</p>';
-  };
-  text?.addEventListener('input', () => count && (count.textContent = `${text.value.length}/500`));
-  $('#commentPreviewBtn')?.addEventListener('click', () => alert(text.value.trim() || '还没有写内容'));
-  $('#commentSendBtn')?.addEventListener('click', () => {
-    const message = text.value.trim();
-    const nickname = name.value.trim();
-    if (!nickname || !message) { alert('昵称和留言内容都要填'); return; }
-    const items = load();
-    items.unshift({ name: nickname, text: message, time: new Date().toLocaleString('zh-CN') });
-    save(items);
-    text.value = '';
-    count.textContent = '0/500';
-    render();
-  });
-  $('#commentRefreshBtn')?.addEventListener('click', render);
-  render();
-}
 
 /* 09 Init */
 function initModals() {
@@ -504,9 +474,6 @@ function initModals() {
 }
 
 function initFooterStats() {
-  const visitNumber = Number(localStorage.getItem('eason-visitor-number') || Math.floor(10000 + Math.random() * 90000));
-  localStorage.setItem('eason-visitor-number', String(visitNumber));
-  $('#visitFooter') && ($('#visitFooter').textContent = String(visitNumber));
   const days = Math.max(1, Math.ceil((Date.now() - new Date(CONFIG.siteStartDate).getTime()) / 86400000));
   $('#runFooter') && ($('#runFooter').textContent = String(days));
   $('#lastVisit') && ($('#lastVisit').textContent = new Date().toLocaleDateString('zh-CN'));
@@ -520,7 +487,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initMusic();
   initPostsGallery();
-  initComments();
   initModals();
   initFooterStats();
 });

@@ -26,4 +26,3 @@ eason_blog_clean/
 
 ## 注意
 
-留言箱当前是本地静态留言，只保存在访问者自己的浏览器 localStorage。后续要全网共享留言，需要接入 Twikoo / Waline / 后端数据库。

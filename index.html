@@ -40,7 +40,6 @@
         <button class="nav-link-btn nav-drop-btn" id="aboutDropBtn" type="button" aria-expanded="false">关于</button>
         <div class="nav-dropdown-menu">
           <a href="#aboutMe">关于我</a>
-          <a href="#messageBox">留言箱</a>
         </div>
       </div>
     </nav>
@@ -167,7 +166,7 @@
     </section>
   </main>
 
-  <!-- 关于与留言箱 -->
+  <!-- 关于我 -->
   <section class="info-sections">
     <section class="info-card" id="aboutMe">
       <h2>关于我</h2>
@@ -181,25 +180,10 @@
       </div>
     </section>
 
-    <section class="info-card comment-card" id="messageBox">
-      <h2>留言箱</h2>
-      <p>分享你的想法，与大家交流讨论。</p>
-      <div class="comment-form">
-        <div class="avatar-dot" aria-hidden="true"></div>
-        <div class="comment-fields">
-          <div class="comment-row"><label>昵称<input id="commentName" maxlength="20" placeholder="必填" /></label><label>邮箱<input id="commentEmail" placeholder="选填" /></label><label>网址<input id="commentSite" placeholder="选填" /></label></div>
-          <textarea id="commentText" maxlength="500" placeholder="来都来了，不说两句嘛？"></textarea>
-          <div class="comment-actions"><span id="commentCount">0/500</span><button class="message-btn ghost" id="commentPreviewBtn" type="button">预览</button><button class="message-btn" id="commentSendBtn" type="button">发送</button></div>
-        </div>
-      </div>
-      <div class="comment-list-head"><strong><span id="commentTotal">0</span> 条评论</strong><button class="link-btn" id="commentRefreshBtn" type="button">刷新</button></div>
-      <div class="comment-list" id="commentList"></div>
-    </section>
   </section>
 
   <footer class="site-footer" id="data">
     <div class="footer-grid">
-      <div class="footer-stat"><strong id="visitFooter">1</strong><span>访客编号</span></div>
       <div class="footer-stat"><strong id="articleCount">5</strong><span>文章数量</span></div>
       <div class="footer-stat"><strong id="runFooter">1</strong><span>运行天数</span></div>
       <div class="footer-stat"><strong id="lastVisit">今天</strong><span>最后访问</span></div>
