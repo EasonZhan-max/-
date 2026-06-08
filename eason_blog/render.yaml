@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: eason-blog
+    env: static
+    buildCommand: ""
+    staticPublishPath: ./eason_blog
