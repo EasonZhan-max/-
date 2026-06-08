@@ -20,7 +20,7 @@ const CONFIG = {
     '慢慢来，所有热爱都会发光。',
     '把普通日子过成自己的星河。',
     '今天也要向喜欢的未来靠近一点。',
-    '保持热爱，奔赴下一场山海。'
+    '奔赴星辰大海，不负心中热爱。'
   ],
   playlist: [
     { name: '一点', artist: 'muyoi pezzi', cover: 'assets/images/cover-yidian.jpg', src: 'assets/music/yidian.mp3' },
