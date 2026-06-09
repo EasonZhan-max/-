@@ -160,6 +160,125 @@ html.bg-solid .mist-bg::after { display: none; }
 @keyframes heroFloat { 50% { transform: translateX(-50%) translateY(7px); } }
 html.custom-hide-hero-text .hero-text { display: none; }
 
+/* 首页分界线：可在调色板中开关 */
+.hero-divider {
+  position: relative;
+  width: min(1180px, calc(100% - 28px));
+  height: 64px;
+  margin: -30px auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 5;
+}
+.hero-divider::before {
+  content: "";
+  position: absolute;
+  inset: 8px 0;
+  border-radius: 999px;
+  background: radial-gradient(circle at center, rgba(159,185,201,.12), transparent 62%);
+  filter: blur(18px);
+  opacity: .8;
+}
+.divider-line, .divider-glow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 999px;
+}
+.divider-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(159,185,201,.18) 10%, rgba(240,184,188,.35) 50%, rgba(159,185,201,.18) 90%, transparent 100%);
+}
+.divider-glow {
+  left: 7%;
+  right: 7%;
+  height: 3px;
+  opacity: .95;
+  background: linear-gradient(90deg, transparent 0%, rgba(159,185,201,.08) 12%, rgba(159,185,201,.82) 24%, rgba(240,184,188,.95) 50%, rgba(159,185,201,.82) 76%, rgba(159,185,201,.08) 88%, transparent 100%);
+  background-size: 220% 100%;
+  filter: blur(.3px) drop-shadow(0 0 12px rgba(159,185,201,.40));
+  animation: dividerShimmer 5.5s linear infinite;
+}
+.divider-center {
+  position: relative;
+  width: 92px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+}
+.divider-core {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.98) 0 22%, rgba(240,184,188,.90) 38%, rgba(159,185,201,.88) 72%, rgba(159,185,201,.12) 100%);
+  box-shadow: 0 0 0 5px rgba(255,255,255,.05), 0 0 18px rgba(159,185,201,.55), 0 0 26px rgba(240,184,188,.20);
+}
+.divider-ring {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.15);
+  box-shadow: 0 0 18px rgba(159,185,201,.22), inset 0 0 18px rgba(240,184,188,.08);
+  animation: dividerPulse 3.4s ease-in-out infinite;
+}
+.divider-spark {
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.98) 0 28%, rgba(159,185,201,.95) 58%, transparent 74%);
+  box-shadow: 0 0 12px rgba(159,185,201,.62);
+}
+.divider-spark-1 { animation: dividerTravel 6.2s linear infinite; }
+.divider-spark-2 { animation: dividerTravelReverse 7.4s linear infinite; }
+@keyframes dividerShimmer {
+  0% { background-position: 0% 50%; opacity: .78; }
+  50% { background-position: 100% 50%; opacity: 1; }
+  100% { background-position: 200% 50%; opacity: .78; }
+}
+@keyframes dividerPulse {
+  0%, 100% { transform: scale(.92); opacity: .55; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+@keyframes dividerTravel {
+  0% { left: 12%; opacity: 0; }
+  10% { opacity: 1; }
+  45% { opacity: 1; }
+  50% { left: calc(50% - 34px); opacity: .65; }
+  90% { opacity: 1; }
+  100% { left: 88%; opacity: 0; }
+}
+@keyframes dividerTravelReverse {
+  0% { left: 88%; opacity: 0; }
+  10% { opacity: 1; }
+  50% { left: calc(50% + 26px); opacity: .55; }
+  90% { opacity: 1; }
+  100% { left: 12%; opacity: 0; }
+}
+html.custom-hide-divider-fx .divider-glow,
+html.custom-hide-divider-fx .divider-center,
+html.custom-hide-divider-fx .divider-spark,
+html.custom-hide-divider-fx .hero-divider::before {
+  display: none;
+}
+html.custom-hide-divider-fx .hero-divider {
+  margin-top: -18px;
+  height: 34px;
+}
+html.custom-hide-divider-fx .divider-line {
+  opacity: .55;
+}
+.hero-divider + .layout {
+  margin-top: 10px;
+}
+
 /* 05 Layout & Cards */
 .layout { width: min(1180px, calc(100% - 28px)); margin: clamp(24px, 3vw, 38px) auto 70px; display: grid; grid-template-columns: 290px 1fr; gap: 24px; align-items: start; scroll-margin-top: 110px; }
 .sidebar { position: sticky; top: 105px; display: grid; gap: 18px; }
@@ -758,3 +877,16 @@ body.palette-open .backtop {
   }
 }
 
+
+@media (max-width: 1024px) {
+  .hero-divider { width: min(96%, 960px); height: 56px; margin-top: -26px; }
+  .divider-center { width: 78px; }
+  .divider-ring { width: 56px; height: 56px; }
+}
+@media (max-width: 768px) {
+  .hero-divider { width: calc(100% - 22px); height: 48px; margin-top: -22px; }
+  .divider-glow { left: 4%; right: 4%; }
+  .divider-center { width: 64px; height: 34px; }
+  .divider-ring { width: 48px; height: 48px; }
+  .divider-core { width: 14px; height: 14px; }
+}
