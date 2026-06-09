@@ -8,7 +8,7 @@
   <link rel="icon" type="image/jpeg" href="assets/images/avatar.jpg" />
   <link rel="apple-touch-icon" href="assets/images/avatar.jpg" />
   <meta name="apple-mobile-web-app-title" content="Eason | 个人博客" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20260610-info-mobilefix1" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260610-siteinfo-plain1" />
 </head>
 <body>
   <!-- 背景层：星星、雾光、流星 -->
@@ -194,26 +194,13 @@
     </section>
 
     <!-- 本站信息：由原留言箱位置调整而来 -->
-    <section class="info-card site-info-card" id="siteInfo">
+    <section class="info-card site-info-card site-info-plain" id="siteInfo">
       <h2>本站信息</h2>
-      <p>这里记录本站的制作信息、主题来源和相关链接，方便查看博客信息。</p>
-      <div class="site-info-grid site-info-grid-custom">
-        <div><strong>GPT-5.5</strong><span>辅助制作模型</span></div>
-        <div><strong>Render</strong><span>部署平台</span></div>
-        <div><strong>kipfel 星空</strong><span>站点主题</span></div>
-        <div><strong>ねこかけ</strong><span>主页大图作者</span></div>
+      <p>本站由 <strong>GPT-5.5</strong> 模型辅助制作，部署平台为 <strong>Render</strong>，主题为 <strong>kipfel 星空</strong>。</p>
+      <div class="site-info-plain-list">
+        <p><span>主页大图作者：</span><a href="https://x.com/neko_kakera?s=21" target="_blank" rel="noopener noreferrer">ねこかけ / X</a></p>
+        <p><span>Spotify 音乐解析下载站：</span><a href="https://spotidown.co" target="_blank" rel="noopener noreferrer">spotidown.co</a></p>
       </div>
-      <div class="site-link-list">
-        <a class="contact-link" href="https://x.com/neko_kakera?s=21" target="_blank" rel="noopener noreferrer">
-          <span class="contact-main"><span><small>作者主页</small><strong>ねこかけ / X</strong></span></span>
-          <span>跳转</span>
-        </a>
-        <a class="contact-link" href="https://spotidown.co" target="_blank" rel="noopener noreferrer">
-          <span class="contact-main"><span><small>工具推荐</small><strong>Spotify 音乐解析下载站</strong></span></span>
-          <span>跳转</span>
-        </a>
-      </div>
-      <p class="site-info-note">本站由 GPT-5.5 模型辅助制作，部署平台为 Render，主题为 kipfel 星空。</p>
     </section>
 
   </section>
@@ -247,6 +234,6 @@
 
   <div class="top-music-popover" id="topMusicPopover" aria-hidden="true"><div class="top-music-card"><div class="top-music-main"><img class="top-music-cover" id="topMusicCover" src="assets/images/cover-yidian.jpg" alt="音乐封面" /><div class="top-music-info"><div class="top-music-title" id="topMusicTitle">一点</div><div class="top-music-sub" id="topMusicSub">muyoi pezzi</div><div class="top-music-time" id="topMusicTime">0:00 / 0:00</div></div><button class="top-close" type="button" id="topMusicClose" aria-label="关闭音乐弹窗">×</button></div><input class="top-progress" id="topMusicProgress" type="range" min="0" max="100" value="0" /><div class="top-music-controls"><button type="button" id="topMusicMode">循环</button><button type="button" id="topMusicPrev">上一首</button><button type="button" class="top-play" id="topMusicPlay">播放</button><button type="button" id="topMusicNext">下一首</button><button type="button" id="topMusicList">歌单</button></div><div class="top-playlist-panel" id="topMusicPlaylist"></div></div></div>
 
-  <script src="assets/js/main.js?v=20260610-info-mobilefix1"></script>
+  <script src="assets/js/main.js?v=20260610-siteinfo-plain1"></script>
 </body>
 </html>

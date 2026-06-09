@@ -1470,3 +1470,64 @@ body.palette-open .backtop {
     grid-template-columns: 1fr !important;
   }
 }
+
+
+/* 18 Site info plain style：本站信息不再使用卡片框 */
+.site-info-plain .site-info-grid,
+.site-info-plain .site-info-grid-custom,
+.site-info-plain .site-link-list {
+  display: none !important;
+}
+.site-info-plain {
+  overflow: hidden;
+}
+.site-info-plain > p {
+  max-width: 980px;
+  font-size: clamp(16px, 2vw, 22px);
+  line-height: 1.9;
+  color: var(--muted);
+}
+.site-info-plain > p strong {
+  color: var(--text);
+}
+.site-info-plain-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+.site-info-plain-list p {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(15px, 1.8vw, 20px);
+  line-height: 1.8;
+}
+.site-info-plain-list span {
+  color: var(--muted);
+}
+.site-info-plain-list a {
+  color: var(--text);
+  font-weight: 900;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(159,185,201,.55);
+  padding-bottom: 2px;
+  transition: color .18s ease, border-color .18s ease, text-shadow .18s ease;
+}
+.site-info-plain-list a:hover {
+  color: var(--mist);
+  border-color: var(--mist);
+  text-shadow: 0 0 16px rgba(159,185,201,.28);
+}
+
+@media (max-width: 680px) {
+  .site-info-plain > p {
+    font-size: 15px;
+    line-height: 1.85;
+  }
+  .site-info-plain-list {
+    gap: 10px;
+  }
+  .site-info-plain-list p {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+}
