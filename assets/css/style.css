@@ -431,118 +431,150 @@ body.modal-open { overflow: hidden; }
   .preset-grid { gap: 8px; }
 }
 
-/* 13 V28 Fixes
-   说明：修复调色板按钮位置、下拉菜单点击收起、本站信息卡片。 */
-.site-info-card { scroll-margin-top: 112px; }
-.site-info-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 16px;
+/* =========================================================
+   V28-FIX: 头像跳转 / 调色板尺寸与按钮位置 / 返回顶部遮挡
+   ========================================================= */
+.avatar-about-link {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 18px;
+  border-radius: 30px;
+  transition: transform .22s ease, filter .22s ease;
 }
-.site-info-grid div {
-  min-height: 84px;
-  display: grid;
-  align-content: center;
-  gap: 6px;
-  padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  background: rgba(159,185,201,.12);
-}
-.site-info-grid strong { font-size: 20px; }
-.site-info-grid span,
-.site-info-note { color: var(--muted); }
+.avatar-about-link .avatar-large { margin: 0; display: block; }
+.avatar-about-link:hover { transform: translateY(-2px) scale(1.02); filter: brightness(1.06); }
+.avatar-about-link:active { transform: scale(.98); }
 
-/* 顶部栏下拉：改为点击控制，防止 hover 导致再点不收起 */
-.nav-dropdown:not(.open):hover .nav-dropdown-menu {
-  opacity: 0;
-  pointer-events: none;
-  visibility: hidden;
-  transform: translateX(-50%) translateY(8px);
-}
-.nav-dropdown-menu {
-  visibility: hidden;
-  z-index: 9999;
-}
-.nav-dropdown.open .nav-dropdown-menu {
-  opacity: 1;
-  pointer-events: auto;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
-}
-@media (max-width: 1000px) {
-  .nav-dropdown:not(.open):hover .nav-dropdown-menu { transform: translateY(8px); }
-  .nav-dropdown.open .nav-dropdown-menu { transform: translateY(0); }
+body.modal-open .backtop {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateY(12px) !important;
 }
 
-/* 调色板：重置和关闭按钮分开，避免重叠 */
-.palette-modal-card {
-  width: min(460px, 92vw) !important;
-  max-height: 82vh !important;
-  padding: 14px !important;
-  overflow: auto !important;
+#paletteModal {
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
+  padding: clamp(10px, 2vh, 18px) clamp(10px, 2vw, 22px) 10px !important;
 }
-.palette-modal-card > .modal-close {
-  top: 14px !important;
-  right: 14px !important;
-  width: 40px !important;
-  height: 40px !important;
-  border-radius: 14px !important;
-  z-index: 5 !important;
+#paletteModal .palette-modal-card {
+  width: min(420px, calc(100vw - 24px)) !important;
+  max-height: min(76vh, 620px) !important;
+  padding: 12px !important;
+  border-radius: 22px !important;
+  overflow-y: auto !important;
+  margin: 0 !important;
 }
-.palette-head {
+#paletteModal .palette-modal-card > .modal-close {
+  top: 10px !important;
+  right: 10px !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 13px !important;
+  font-size: 24px !important;
+  z-index: 10 !important;
+}
+#paletteModal .palette-head {
   position: relative !important;
   top: auto !important;
   left: auto !important;
   right: auto !important;
-  min-height: 42px !important;
   display: flex !important;
   align-items: center !important;
-  justify-content: flex-start !important;
-  padding: 0 108px 0 0 !important;
-  margin: 0 0 10px !important;
+  gap: 8px !important;
+  min-height: 38px !important;
+  padding: 0 44px 0 0 !important;
+  margin: 0 0 8px !important;
 }
-.palette-head h2 {
-  font-size: clamp(20px, 4.6vw, 24px) !important;
-  line-height: 1.12 !important;
-  white-space: nowrap !important;
-}
-.palette-reset {
-  position: absolute !important;
-  top: 2px !important;
-  right: 54px !important;
-  height: 36px !important;
-  padding: 0 12px !important;
-  border-radius: 13px !important;
+#paletteModal .palette-head h2 {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
   margin: 0 !important;
-  z-index: 4 !important;
+  font-size: clamp(18px, 3vw, 23px) !important;
+  line-height: 1.1 !important;
+  white-space: nowrap !important;
+  word-break: keep-all !important;
 }
-@media (max-width: 680px) {
-  .palette-modal-card {
-    width: 90vw !important;
-    max-height: 80vh !important;
-    padding: 12px !important;
+#paletteModal .palette-reset {
+  position: static !important;
+  flex: 0 0 auto !important;
+  height: 32px !important;
+  min-width: 56px !important;
+  padding: 0 10px !important;
+  margin: 0 !important;
+  border-radius: 12px !important;
+  font-size: 14px !important;
+  z-index: 5 !important;
+}
+#paletteModal .palette-section {
+  margin-top: 8px !important;
+  padding: 9px !important;
+  border-radius: 15px !important;
+}
+#paletteModal .palette-section-title {
+  margin-bottom: 8px !important;
+  font-size: 16px !important;
+}
+#paletteModal .palette-section-title b {
+  min-width: 42px !important;
+  height: 30px !important;
+  border-radius: 11px !important;
+}
+#paletteModal .preset-grid,
+#paletteModal .toggle-grid { gap: 8px !important; }
+#paletteModal .preset-btn {
+  min-height: 38px !important;
+  padding: 8px 10px !important;
+  border-radius: 13px !important;
+}
+#paletteModal .toggle-item {
+  min-height: 54px !important;
+  padding: 9px 10px !important;
+  border-radius: 14px !important;
+}
+#paletteModal .toggle-item strong { font-size: 15px !important; }
+#paletteModal .toggle-item small { font-size: 12px !important; }
+
+@media (max-width: 900px) {
+  #paletteModal {
+    align-items: flex-start !important;
+    justify-content: flex-end !important;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 8px) !important;
+    padding-right: 8px !important;
   }
-  .palette-head {
-    min-height: 40px !important;
-    padding-right: 104px !important;
+  #paletteModal .palette-modal-card {
+    width: min(360px, calc(100vw - 16px)) !important;
+    max-height: 72vh !important;
+    padding: 10px !important;
+    border-radius: 20px !important;
   }
-  .palette-head h2 { font-size: clamp(18px, 5.8vw, 22px) !important; }
-  .palette-reset {
-    right: 50px !important;
+  #paletteModal .palette-head {
+    min-height: 34px !important;
+    padding-right: 40px !important;
+  }
+  #paletteModal .palette-head h2 { font-size: clamp(17px, 5vw, 21px) !important; }
+  #paletteModal .palette-reset {
+    height: 30px !important;
+    min-width: 52px !important;
+    padding: 0 8px !important;
+    font-size: 13px !important;
+  }
+  #paletteModal .palette-modal-card > .modal-close {
+    width: 34px !important;
     height: 34px !important;
-    padding: 0 10px !important;
+    font-size: 22px !important;
   }
-  .palette-modal-card > .modal-close {
-    top: 12px !important;
-    right: 12px !important;
-    width: 38px !important;
-    height: 38px !important;
-  }
-  .site-info-grid { grid-template-columns: 1fr 1fr; }
 }
-@media (max-width: 420px) {
-  .site-info-grid { grid-template-columns: 1fr; }
+
+@media (max-width: 520px) {
+  #paletteModal .palette-modal-card {
+    width: min(330px, calc(100vw - 14px)) !important;
+    max-height: 70vh !important;
+    padding: 9px !important;
+  }
+  #paletteModal .palette-section-title { font-size: 15px !important; }
+  #paletteModal .preset-grid { grid-template-columns: 1fr 1fr !important; }
+  #paletteModal .preset-btn { min-height: 34px !important; font-size: 13px !important; }
+  #paletteModal .toggle-item { min-height: 48px !important; }
 }
 
