@@ -219,8 +219,20 @@ html.custom-hide-hero-text .hero-text { display: none; }
   animation: dividerMistFlow 9s ease-in-out infinite;
 }
 .divider-center { display: none; }
-.divider-core, .divider-ring, .divider-spark { display: none; }
-.divider-spark-1, .divider-spark-2 { display: none; }
+.divider-core, .divider-ring { display: none; }
+.divider-spark {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.96) 0 28%, rgba(206,227,236,.92) 30%, rgba(159,185,201,.54) 58%, rgba(159,185,201,0) 74%);
+  box-shadow: 0 0 0 7px rgba(206,227,236,.08), 0 0 18px rgba(206,227,236,.22);
+  opacity: .78;
+}
+.divider-spark-1 { animation: dividerDrift 10.5s linear infinite; }
+.divider-spark-2 { animation: dividerDriftReverse 12s linear infinite; animation-delay: -4s; }
 @keyframes dividerMistFlow {
   0%, 100% { background-position: 0% 50%; opacity: .82; }
   50% { background-position: 100% 50%; opacity: 1; }
@@ -920,4 +932,53 @@ body.palette-open .backtop {
   .music-play-tip { top: 72px; width: calc(100% - 24px); }
   .music-play-tip-inner { justify-content: space-between; width: 100%; }
   .music-play-tip-text { font-size: 13px; }
+}
+
+
+/* 14 Desktop layout optimization & sidebar fixes */
+.layout { width: min(1320px, calc(100% - 40px)); grid-template-columns: 300px minmax(0, 1fr); gap: 28px; }
+.content, .sidebar { min-width: 0; }
+.panel, .article-tools, .post { position: relative; }
+.posts { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+.posts.single-card { grid-template-columns: minmax(0, 760px); }
+.posts.single-card .post { max-width: 760px; }
+.article-tools { gap: 20px; }
+.article-title-block { min-width: 0; }
+.tool-actions { justify-content: flex-end; }
+.post { display: flex; flex-direction: column; }
+.post-body { display: grid; gap: 12px; }
+.post-body .meta { margin-bottom: 0; }
+.post-body .tags { margin-top: 2px; }
+#music { z-index: 5; overflow: visible; }
+#music.music-panel-open { z-index: 70; }
+#music .playlist-dropdown { position: relative; }
+#music .playlist-menu { z-index: 120; }
+#categoryPanel, #tagPanel { z-index: 1; }
+#categoryStats .category-item,
+#tagStats .tag-stat { color: var(--text) !important; }
+#categoryStats .category-item span:first-child,
+#tagStats .tag-stat { color: var(--text) !important; }
+#categoryStats .count-badge,
+#tagStats .tag-stat small { color: #e7f0f6 !important; }
+.category-item, .tag-stat { color: var(--text); }
+.category-item:hover, .tag-stat:hover { background: rgba(159,185,201,.18); }
+.playlist-trigger-text strong,
+.playlist-item-text strong,
+.playlist-item,
+.playlist-trigger { color: var(--text); }
+.playlist-trigger-text span,
+.playlist-trigger-text small,
+.playlist-item-text small { color: var(--muted) !important; }
+.top-playlist-panel .playlist-item-text strong,
+.top-playlist-panel .playlist-item { color: #fff; }
+@media (min-width: 1001px) {
+  .site-nav { width: min(1320px, calc(100% - 40px)); }
+  .article-tools { padding: 20px 22px; }
+  .article-title-block strong { font-size: 34px; letter-spacing: .3px; }
+  .article-title-block span { font-size: 18px; }
+  .tool-btn { min-height: 44px; }
+  .posts.single-card { justify-content: start; }
+}
+@media (max-width: 1000px) {
+  .layout { width: min(100% - 24px, 1180px); }
 }

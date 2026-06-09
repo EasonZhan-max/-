@@ -359,10 +359,18 @@ function initMusic() {
   ['#prevBtn', '#modalPrevBtn', '#topMusicPrev'].forEach((selector) => $(selector)?.addEventListener('click', prevSong));
   ['#loopModeBtn', '#modalLoopModeBtn', '#topMusicMode'].forEach((selector) => $(selector)?.addEventListener('click', cycleMode));
   ['#progress', '#musicModalProgress', '#topMusicProgress'].forEach((selector) => $(selector)?.addEventListener('input', (e) => seek(e.target.value)));
-  ['#playlistTrigger', '#modalPlaylistTrigger'].forEach((selector) => $(selector)?.addEventListener('click', (e) => { e.stopPropagation(); e.currentTarget.closest('.playlist-dropdown')?.classList.toggle('open'); }));
+  ['#playlistTrigger', '#modalPlaylistTrigger'].forEach((selector) => $(selector)?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const dropdown = e.currentTarget.closest('.playlist-dropdown');
+    dropdown?.classList.toggle('open');
+    $('#music')?.classList.toggle('music-panel-open', !!$('#playlistDropdown')?.classList.contains('open'));
+  }));
   $('#topMusicList')?.addEventListener('click', () => $('#topMusicPlaylist')?.classList.toggle('show'));
   document.addEventListener('click', (event) => {
-    if (!event.target.closest('.playlist-dropdown')) $$('.playlist-dropdown.open').forEach((el) => el.classList.remove('open'));
+    if (!event.target.closest('.playlist-dropdown')) {
+      $$('.playlist-dropdown.open').forEach((el) => el.classList.remove('open'));
+      $('#music')?.classList.remove('music-panel-open');
+    }
   });
   document.addEventListener('click', (event) => {
     const item = event.target.closest('[data-song-index]');
@@ -424,12 +432,14 @@ function initPostsGallery() {
   };
   function renderPosts() {
     const filtered = getFiltered();
+    const start = (currentPage - 1) * CONFIG.postsPerPage;
+    const end = start + CONFIG.postsPerPage;
+    const visiblePosts = filtered.slice(start, end);
     allPosts.forEach((post) => post.classList.add('hidden'));
     filtered.forEach((post, index) => {
-      const start = (currentPage - 1) * CONFIG.postsPerPage;
-      const end = start + CONFIG.postsPerPage;
       post.classList.toggle('hidden', index < start || index >= end);
     });
+    postList?.classList.toggle('single-card', visiblePosts.length === 1);
     renderPagination(filtered.length);
   }
   const setFilter = (filter) => {
