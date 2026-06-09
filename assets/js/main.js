@@ -240,11 +240,29 @@ function initMeteors() {
 function initNavigation() {
   const nav = $('#siteNav');
   const backTop = $('#backTopBtn');
+  const mobileNavToggle = $('#mobileNavToggle');
+  const mobileQuery = window.matchMedia('(max-width: 900px)');
   const getScrollTop = () => Math.max(window.scrollY || 0, document.documentElement.scrollTop || 0, document.body.scrollTop || 0);
   const sync = () => {
     const top = getScrollTop();
     nav?.classList.toggle('nav-collapsed-top', top <= 48);
     backTop?.classList.toggle('is-hidden', top < 220);
+  };
+  const setMobileNavCollapsed = (collapsed) => {
+    if (!nav || !mobileNavToggle) return;
+    const active = mobileQuery.matches && collapsed;
+    nav.classList.toggle('mobile-links-collapsed', active);
+    mobileNavToggle.setAttribute('aria-expanded', String(!active));
+    mobileNavToggle.setAttribute('aria-label', active ? '展开顶部栏' : '收起顶部栏');
+    mobileNavToggle.setAttribute('title', active ? '展开顶部栏' : '收起顶部栏');
+  };
+  const syncMobileNav = () => {
+    if (!mobileQuery.matches) {
+      setMobileNavCollapsed(false);
+      return;
+    }
+    const saved = localStorage.getItem('eason-mobile-nav-collapsed') === '1';
+    setMobileNavCollapsed(saved);
   };
   window.addEventListener('scroll', sync, { passive: true });
   window.addEventListener('resize', sync, { passive: true });
@@ -276,6 +294,15 @@ function initNavigation() {
   document.addEventListener('click', (event) => {
     if (!event.target.closest('.nav-dropdown')) $$('.nav-dropdown.open').forEach((drop) => closeNavDropdown(drop));
   });
+
+  mobileNavToggle?.addEventListener('click', () => {
+    const collapsed = !nav?.classList.contains('mobile-links-collapsed');
+    setMobileNavCollapsed(collapsed);
+    localStorage.setItem('eason-mobile-nav-collapsed', collapsed ? '1' : '0');
+    $$('.nav-dropdown.open').forEach((drop) => closeNavDropdown(drop));
+  });
+  window.addEventListener('resize', syncMobileNav, { passive: true });
+  syncMobileNav();
 
   // 头像跳转到“关于我”
   const goAbout = () => $('#aboutMe')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
