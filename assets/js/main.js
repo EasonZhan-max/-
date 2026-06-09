@@ -372,8 +372,8 @@ function initMusic() {
   $('#musicQuick')?.addEventListener('click', () => $('#topMusicPopover')?.classList.toggle('show'));
   $('#topMusicClose')?.addEventListener('click', () => $('#topMusicPopover')?.classList.remove('show'));
   $('#music')?.addEventListener('click', (event) => { if (!event.target.closest('button,input,.playlist-dropdown')) openModal('#musicModal'); });
-  $('#musicPromptYes')?.addEventListener('click', () => { closeModal($('#musicPromptModal')); audio.play().catch(() => {}); $('#topMusicPopover')?.classList.add('show'); });
-  $('#musicPromptNo')?.addEventListener('click', () => { closeModal($('#musicPromptModal')); });
+  $('#musicPromptYes')?.addEventListener('click', () => { $('#musicPlayTip')?.classList.remove('show'); audio.play().catch(() => {}); $('#topMusicPopover')?.classList.add('show'); });
+  $('#musicPromptNo')?.addEventListener('click', () => { $('#musicPlayTip')?.classList.remove('show'); });
   audio.addEventListener('play', updateUI);
   audio.addEventListener('pause', updateUI);
   audio.addEventListener('timeupdate', syncProgress);
@@ -381,7 +381,7 @@ function initMusic() {
   audio.addEventListener('ended', nextSong);
   syncMode();
   loadSong(0, false);
-  window.addEventListener('load', () => { setTimeout(() => openModal('#musicPromptModal'), 420); }, { once: true });
+  window.addEventListener('load', () => { setTimeout(() => $('#musicPlayTip')?.classList.add('show'), 500); }, { once: true });
 }
 
 /* 07 PostsGallery */
