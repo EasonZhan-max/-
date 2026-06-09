@@ -8,7 +8,7 @@
   <link rel="icon" type="image/jpeg" href="assets/images/avatar.jpg" />
   <link rel="apple-touch-icon" href="assets/images/avatar.jpg" />
   <meta name="apple-mobile-web-app-title" content="Eason | 个人博客" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260609-realfix3" />
 </head>
 <body>
   <!-- 背景层：星星、雾光、流星 -->
@@ -18,7 +18,7 @@
 
   <!-- 顶部导航栏：回到顶部时自动收起 -->
   <header class="site-nav" id="siteNav">
-    <a class="brand" href="#aboutMe" aria-label="查看关于我">
+    <a class="brand" href="#aboutMe" aria-label="跳转到关于我">
       <img src="assets/images/avatar.jpg" alt="Eason头像" />
       <span>Eason</span>
     </a>
@@ -79,7 +79,7 @@
       <!-- 左侧栏 -->
       <aside class="sidebar">
         <section class="panel profile">
-          <a class="avatar-link" href="#aboutMe" aria-label="查看关于我"><img class="avatar-large" src="assets/images/avatar.jpg" alt="Eason头像" /></a>
+          <img class="avatar-large avatar-clickable" src="assets/images/avatar.jpg" alt="Eason头像" role="button" tabindex="0" aria-label="跳转到关于我" />
           <h2>Eason</h2>
           <p>在雾蓝星辰里记录日常。</p>
           <a class="douyin" href="https://v.douyin.com/PZZp5gCTvQs/" target="_blank" rel="noopener noreferrer">抖音</a>
@@ -216,6 +216,6 @@
 
   <div class="top-music-popover" id="topMusicPopover" aria-hidden="true"><div class="top-music-card"><div class="top-music-main"><img class="top-music-cover" id="topMusicCover" src="assets/images/cover-yidian.jpg" alt="音乐封面" /><div class="top-music-info"><div class="top-music-title" id="topMusicTitle">一点</div><div class="top-music-sub" id="topMusicSub">muyoi pezzi</div><div class="top-music-time" id="topMusicTime">0:00 / 0:00</div></div><button class="top-close" type="button" id="topMusicClose" aria-label="关闭音乐弹窗">×</button></div><input class="top-progress" id="topMusicProgress" type="range" min="0" max="100" value="0" /><div class="top-music-controls"><button type="button" id="topMusicMode">循环</button><button type="button" id="topMusicPrev">上一首</button><button type="button" class="top-play" id="topMusicPlay">播放</button><button type="button" id="topMusicNext">下一首</button><button type="button" id="topMusicList">歌单</button></div><div class="top-playlist-panel" id="topMusicPlaylist"></div></div></div>
 
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v=20260609-realfix3"></script>
 </body>
 </html>

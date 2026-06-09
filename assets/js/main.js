@@ -54,10 +54,7 @@ const closeModal = (modal) => {
   modal.classList.remove('show');
   modal.setAttribute('aria-hidden', 'true');
   if (modal.id === 'paletteModal') document.body.classList.remove('palette-open');
-  if (!$('.modal.show')) {
-    document.body.classList.remove('modal-open');
-    document.body.classList.remove('palette-open');
-  }
+  if (!$('.modal.show')) document.body.classList.remove('modal-open');
 };
 
 /* 03 ThemePalette */
@@ -276,6 +273,13 @@ function initNavigation() {
   });
   document.addEventListener('click', (event) => {
     if (!event.target.closest('.nav-dropdown')) $$('.nav-dropdown.open').forEach((drop) => closeNavDropdown(drop));
+  });
+
+  // 头像跳转到“关于我”
+  const goAbout = () => $('#aboutMe')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  $('.avatar-large')?.addEventListener('click', goAbout);
+  $('.avatar-large')?.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); goAbout(); }
   });
   sync();
 }

@@ -546,72 +546,63 @@ body.modal-open { overflow: hidden; }
   .site-info-grid { grid-template-columns: 1fr; }
 }
 
-
-/* 14 V28 final requested fixes
-   说明：本段放在最后，覆盖旧样式，专门修复调色板大小/位置、关闭键显示、头像跳转视觉反馈。 */
-.avatar-link {
-  display: block;
-  width: max-content;
-  max-width: 100%;
-  margin: 0 auto;
-  border-radius: 30px;
+/* =========================================================
+   FINAL FIX - v28 context repair
+   目的：调色板缩小并固定到右上角、修复关闭/重置按钮、头像跳转提示。
+   ========================================================= */
+.avatar-clickable,
+.brand {
   cursor: pointer;
 }
-.avatar-link .avatar-large {
-  display: block;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+.avatar-clickable {
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
 }
-.avatar-link:hover .avatar-large,
-.avatar-link:focus-visible .avatar-large {
-  transform: translateY(-2px) scale(1.018);
-  border-color: rgba(255,255,255,.7);
-  box-shadow: 0 18px 42px rgba(0,0,0,.28);
+.avatar-clickable:hover {
+  transform: translateY(-2px) scale(1.015);
+  box-shadow: 0 16px 36px rgba(0,0,0,.22);
+  filter: brightness(1.04);
 }
 
-/* 调色板打开时隐藏右下角返回顶部，避免挡住面板 */
-body.palette-open .backtop,
-body.modal-open .backtop {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-  transform: translateY(18px) scale(.92) !important;
-}
-
-/* 所有弹窗关闭键统一修复：不变形、不偏位、不被内容盖住 */
+/* 所有弹窗关闭按钮统一修复：不变形、不偏移、不压住内容 */
 .modal-card > .modal-close,
 .top-close {
-  box-sizing: border-box !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 38px !important;
-  height: 38px !important;
-  min-width: 38px !important;
-  min-height: 38px !important;
-  padding: 0 !important;
   position: absolute !important;
   top: 14px !important;
   right: 14px !important;
-  z-index: 30 !important;
-  border-radius: 14px !important;
-  font-size: 28px !important;
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  border-radius: 15px !important;
   line-height: 1 !important;
-  text-align: center !important;
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  z-index: 30 !important;
 }
-.modal-card > .modal-close { color: var(--text) !important; }
+.gallery-modal-card,
+.article-modal-card,
+.notice-modal-card,
+.music-modal-card {
+  padding-top: 66px !important;
+}
 
-/* 调色板弹窗：三端缩小，靠右上角出现 */
+/* 调色板弹窗：跟随顶部栏调色按钮，靠右上角显示 */
 #paletteModal.modal {
   align-items: flex-start !important;
   justify-content: flex-end !important;
-  padding: 82px 18px 16px !important;
+  padding: 86px max(16px, calc((100vw - 1180px) / 2 + 92px)) 18px 16px !important;
+  background: rgba(2,7,12,.26) !important;
+  backdrop-filter: blur(7px) !important;
 }
 #paletteModal .palette-modal-card {
-  width: min(420px, 78vw) !important;
-  max-height: min(74vh, 680px) !important;
+  width: 360px !important;
+  max-width: min(360px, calc(100vw - 28px)) !important;
+  max-height: min(72vh, 640px) !important;
   padding: 12px !important;
+  padding-top: 58px !important;
   border-radius: 22px !important;
   overflow: auto !important;
   transform-origin: top right !important;
@@ -620,65 +611,57 @@ body.modal-open .backtop {
   transform: translateY(0) scale(1) !important;
 }
 #paletteModal .palette-head {
-  position: relative !important;
-  top: auto !important;
-  left: auto !important;
-  right: auto !important;
-  min-height: 38px !important;
+  position: absolute !important;
+  inset: 12px 62px auto 12px !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 !important;
+  margin: 0 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: flex-start !important;
-  gap: 8px !important;
-  padding: 0 98px 0 0 !important;
-  margin: 0 0 8px 0 !important;
 }
 #paletteModal .palette-head h2 {
   margin: 0 !important;
-  max-width: 100% !important;
-  font-size: clamp(18px, 2.3vw, 22px) !important;
-  line-height: 1.1 !important;
+  font-size: 20px !important;
+  line-height: 1 !important;
   white-space: nowrap !important;
+  writing-mode: horizontal-tb !important;
   word-break: keep-all !important;
 }
 #paletteModal .palette-reset {
   position: absolute !important;
-  top: 2px !important;
-  right: 46px !important;
-  width: 50px !important;
-  height: 34px !important;
-  min-width: 50px !important;
-  padding: 0 !important;
+  top: 12px !important;
+  right: 62px !important;
+  height: 40px !important;
+  min-width: 58px !important;
+  padding: 0 12px !important;
   margin: 0 !important;
+  border-radius: 14px !important;
   z-index: 31 !important;
-  border-radius: 12px !important;
-  font-size: 14px !important;
-  line-height: 1 !important;
+  font-size: 15px !important;
 }
 #paletteModal .palette-modal-card > .modal-close {
   top: 12px !important;
   right: 12px !important;
-  width: 34px !important;
-  height: 34px !important;
-  min-width: 34px !important;
-  min-height: 34px !important;
-  border-radius: 12px !important;
-  font-size: 26px !important;
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
 }
 #paletteModal .palette-section {
   margin-top: 8px !important;
   padding: 10px !important;
-  border-radius: 15px !important;
+  border-radius: 16px !important;
 }
 #paletteModal .palette-section-title {
   font-size: 16px !important;
-  margin-bottom: 7px !important;
+  margin-bottom: 8px !important;
 }
-#paletteModal .hue-slider {
-  height: 10px !important;
-}
-#paletteModal .hue-slider::-webkit-slider-thumb {
-  width: 14px !important;
-  height: 24px !important;
+#paletteModal .palette-section-title b {
+  min-width: 42px !important;
+  height: 30px !important;
+  border-radius: 11px !important;
 }
 #paletteModal .preset-grid {
   gap: 8px !important;
@@ -692,73 +675,86 @@ body.modal-open .backtop {
   gap: 7px !important;
 }
 #paletteModal .toggle-item {
-  padding: 8px 9px !important;
-  border-radius: 12px !important;
+  padding: 8px 10px !important;
+  border-radius: 13px !important;
+}
+#paletteModal .toggle-item strong {
+  font-size: 14px !important;
 }
 #paletteModal .toggle-item small {
   font-size: 11px !important;
 }
 #paletteModal .toggle-item input {
-  width: 38px !important;
-  height: 21px !important;
+  width: 36px !important;
+  height: 20px !important;
+}
+body.palette-open .backtop {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 @media (max-width: 1000px) {
   #paletteModal.modal {
-    padding: 86px 14px 14px !important;
+    padding: 104px 16px 16px 16px !important;
   }
   #paletteModal .palette-modal-card {
-    width: min(380px, 80vw) !important;
-    max-height: 72vh !important;
+    width: 340px !important;
+    max-width: min(340px, calc(100vw - 24px)) !important;
+    max-height: 70vh !important;
   }
 }
 @media (max-width: 680px) {
   #paletteModal.modal {
-    padding: 86px 10px 10px !important;
+    justify-content: flex-end !important;
+    padding: 118px 10px 12px 10px !important;
   }
   #paletteModal .palette-modal-card {
-    width: min(320px, 82vw) !important;
-    max-height: 70dvh !important;
+    width: 320px !important;
+    max-width: calc(100vw - 20px) !important;
+    max-height: 66vh !important;
     padding: 10px !important;
+    padding-top: 54px !important;
     border-radius: 20px !important;
   }
   #paletteModal .palette-head {
-    min-height: 34px !important;
-    padding-right: 86px !important;
+    inset: 10px 56px auto 10px !important;
+    height: 36px !important;
+    min-height: 36px !important;
   }
   #paletteModal .palette-head h2 {
-    font-size: clamp(17px, 4.8vw, 20px) !important;
+    font-size: 18px !important;
   }
   #paletteModal .palette-reset {
-    right: 42px !important;
-    width: 44px !important;
-    min-width: 44px !important;
-    height: 30px !important;
-    font-size: 13px !important;
+    top: 10px !important;
+    right: 56px !important;
+    height: 36px !important;
+    min-width: 52px !important;
+    padding: 0 10px !important;
+    font-size: 14px !important;
   }
   #paletteModal .palette-modal-card > .modal-close {
     top: 10px !important;
     right: 10px !important;
-    width: 30px !important;
-    height: 30px !important;
-    min-width: 30px !important;
-    min-height: 30px !important;
-    font-size: 23px !important;
-  }
-  #paletteModal .palette-section {
-    padding: 8px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    font-size: 24px !important;
   }
   #paletteModal .palette-section-title {
-    font-size: 14px !important;
-  }
-  #paletteModal .palette-section-title b {
-    min-width: 38px !important;
-    height: 26px !important;
-    border-radius: 10px !important;
+    font-size: 15px !important;
   }
   #paletteModal .preset-btn {
-    padding: 7px 6px !important;
-    font-size: 12px !important;
+    font-size: 13px !important;
+  }
+}
+@media (max-width: 360px) {
+  #paletteModal .palette-modal-card {
+    width: 300px !important;
+  }
+  #paletteModal .palette-head h2 {
+    font-size: 16px !important;
   }
 }
 
