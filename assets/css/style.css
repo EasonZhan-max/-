@@ -1379,3 +1379,94 @@ body.palette-open .backtop {
   .site-nav .nav-links a,
   .site-nav .nav-link-btn { font-size: 12px !important; }
 }
+
+
+/* 17 Site info refresh + mobile music prompt refinement */
+.site-info-card p { line-height: 1.8; }
+.site-info-grid-custom strong { font-size: clamp(18px, 2.1vw, 24px); }
+.site-link-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+.site-link-list .contact-link {
+  min-height: 68px;
+}
+.site-link-list .contact-link strong {
+  font-size: 16px;
+}
+.site-link-list .contact-link small {
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .music-play-tip {
+    top: calc(max(8px, env(safe-area-inset-top)) + 150px) !important;
+    width: auto !important;
+    max-width: min(360px, calc(100vw - 24px)) !important;
+    left: 50% !important;
+    z-index: 84 !important;
+  }
+  .music-play-tip-inner {
+    min-width: min(360px, calc(100vw - 24px)) !important;
+    padding: 8px 10px !important;
+    gap: 10px !important;
+    border-radius: 15px !important;
+  }
+  .music-play-tip-text {
+    font-size: 12px !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .music-play-tip-actions {
+    gap: 7px !important;
+    flex-shrink: 0 !important;
+  }
+  .tip-btn {
+    min-width: 60px !important;
+    height: 32px !important;
+    padding: 0 12px !important;
+    font-size: 13px !important;
+    border-radius: 12px !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .music-play-tip {
+    top: calc(max(8px, env(safe-area-inset-top)) + 146px) !important;
+    max-width: calc(100vw - 18px) !important;
+  }
+  .music-play-tip-inner {
+    min-width: calc(100vw - 18px) !important;
+    max-width: calc(100vw - 18px) !important;
+  }
+  .site-info-grid-custom {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .site-link-list .contact-link {
+    padding: 14px !important;
+  }
+  .site-link-list .contact-link strong {
+    font-size: 15px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .music-play-tip {
+    top: calc(max(8px, env(safe-area-inset-top)) + 142px) !important;
+  }
+  .music-play-tip-text {
+    font-size: 11px !important;
+  }
+  .tip-btn {
+    min-width: 56px !important;
+    height: 30px !important;
+    padding: 0 10px !important;
+    font-size: 12px !important;
+  }
+  .site-info-grid-custom {
+    grid-template-columns: 1fr !important;
+  }
+}
