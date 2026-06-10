@@ -424,7 +424,14 @@ function initPostsGallery() {
   const allPosts = $$('.post').sort((a, b) => (b.dataset.date || '').localeCompare(a.dataset.date || ''));
   const postList = $('#postList');
   const pagination = $('#pagination');
-  const detailPage = $('#postDetailPage');
+  let detailPage = $('#postDetailPage');
+  if (!detailPage && postList) {
+    detailPage = document.createElement('section');
+    detailPage.id = 'postDetailPage';
+    detailPage.className = 'post-detail-page hidden';
+    detailPage.setAttribute('aria-live', 'polite');
+    postList.insertAdjacentElement('afterend', detailPage);
+  }
   const contentArea = $('.content');
   let currentFilter = 'all';
   let currentPage = 1;
@@ -553,6 +560,7 @@ function initPostsGallery() {
           <div class="tags">${tagsHtml}</div>
         </div>
       </article>`;
+    detailPage.classList.remove('hidden');
     contentArea?.classList.add('detail-mode');
     allPosts.forEach((item) => item.classList.add('hidden'));
     pagination && (pagination.innerHTML = '');
@@ -588,6 +596,7 @@ function initPostsGallery() {
     if (!slug) { showList(false); return; }
     const post = allPosts.find((item) => getPostSlug(item) === slug);
     if (post) openArticle(post, false);
+    else showList(false);
   };
   window.addEventListener('popstate', openFromUrl);
   openFromUrl();

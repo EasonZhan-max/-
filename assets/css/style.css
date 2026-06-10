@@ -1684,3 +1684,19 @@ body.light .single-link-box { background: rgba(78,125,150,.10); border-color: rg
   .single-post-head h1 { font-size: 28px; }
   .single-meta { font-size: 14px; }
 }
+
+
+/* 21 Fix single article page blank issue */
+.post-detail-page {
+  width: 100%;
+  min-width: 0;
+}
+.content.detail-mode .post-detail-page {
+  display: block !important;
+}
+.content.detail-mode {
+  align-content: start;
+}
+.single-post-card {
+  width: 100%;
+}
