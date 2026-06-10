@@ -1582,3 +1582,28 @@ body.palette-open .backtop {
     font-size: 13px;
   }
 }
+
+
+/* 20 Article modal link & post update */
+.article-modal-link {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  margin: 14px 0 16px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(159,185,201,.22);
+  background: rgba(159,185,201,.12);
+  color: var(--text);
+  font-weight: 800;
+  text-decoration: none;
+  word-break: break-all;
+  transition: background .18s ease, transform .18s ease;
+}
+.article-modal-link:hover {
+  background: rgba(159,185,201,.2);
+  transform: translateY(-1px);
+}
+@media (max-width: 680px) {
+  .article-modal-link { font-size: 13px; padding: 9px 12px; }
+}

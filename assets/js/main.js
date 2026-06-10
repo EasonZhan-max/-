@@ -506,7 +506,9 @@ function initPostsGallery() {
     const meta = $('.meta', post)?.innerHTML || '';
     const tags = $('.tags', post)?.innerHTML || '';
     const body = $('p', post)?.textContent.trim() || '';
-    $('#articleModalBody').innerHTML = `<img class="article-modal-img" src="${img}" alt="${safeText(title)}" /><h2>${safeText(title)}</h2><div class="meta">${meta}</div>${body ? `<p>${safeText(body)}</p>` : ''}<div class="tags">${tags}</div>`;
+    const link = post.dataset.link || '';
+    const linkHtml = link ? `<a class="article-modal-link" href="${safeText(link)}" target="_blank" rel="noopener noreferrer">${safeText(link)}</a>` : '';
+    $('#articleModalBody').innerHTML = `<img class="article-modal-img" src="${img}" alt="${safeText(title)}" /><h2>${safeText(title)}</h2><div class="meta">${meta}</div>${body ? `<p>${safeText(body)}</p>` : ''}${linkHtml}<div class="tags">${tags}</div>`;
     openModal('#articleModal');
   }
   allPosts.forEach((post) => post.addEventListener('click', () => openArticle(post)));
@@ -541,7 +543,7 @@ function initFooterStats() {
   const days = Math.max(1, Math.ceil((Date.now() - new Date(CONFIG.siteStartDate).getTime()) / 86400000));
   const articleCount = $$('.post').length;
   $('#runFooter') && ($('#runFooter').textContent = String(days));
-  $('#lastVisit') && ($('#lastVisit').textContent = new Date().toLocaleDateString('zh-CN'));
+  $('#lastVisit') && ($('#lastVisit').textContent = '2026-06-10');
   $('#siteInfoArticleCount') && ($('#siteInfoArticleCount').textContent = String(articleCount));
   $('#siteInfoRunDays') && ($('#siteInfoRunDays').textContent = String(days));
 }
