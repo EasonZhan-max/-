@@ -424,10 +424,27 @@ function initPostsGallery() {
   const allPosts = $$('.post').sort((a, b) => (b.dataset.date || '').localeCompare(a.dataset.date || ''));
   const postList = $('#postList');
   const pagination = $('#pagination');
+  const detailPage = $('#postDetailPage');
+  const contentArea = $('.content');
   let currentFilter = 'all';
   let currentPage = 1;
 
-  allPosts.forEach((post) => postList.appendChild(post));
+  const slugify = (text) => String(text || '').toLowerCase().replace(/[^a-z0-9一-龥]+/g, '-').replace(/^-|-$/g, '') || 'post';
+  const getPostSlug = (post, index = 0) => {
+    if (!post.dataset.slug) {
+      const imgName = ($('img', post)?.getAttribute('src') || '').split('/').pop()?.replace(/\.[^.]+$/, '') || `post-${index + 1}`;
+      post.dataset.slug = `${post.dataset.date || 'post'}-${slugify(imgName)}`;
+    }
+    return post.dataset.slug;
+  };
+
+  allPosts.forEach((post, index) => {
+    postList.appendChild(post);
+    getPostSlug(post, index);
+    post.setAttribute('role', 'link');
+    post.setAttribute('tabindex', '0');
+    post.setAttribute('aria-label', `打开文章：${post.dataset.title || $('h3', post)?.textContent || '图片分享'}`);
+  });
   $('#articleTotalText') && ($('#articleTotalText').textContent = `共 ${allPosts.length} 篇文章`);
   $('#articleCount') && ($('#articleCount').textContent = String(allPosts.length));
 
@@ -470,6 +487,7 @@ function initPostsGallery() {
     renderPagination(filtered.length);
   }
   const setFilter = (filter) => {
+    showList(false);
     currentFilter = filter;
     currentPage = 1;
     $$('.tool-btn[data-filter]').forEach((btn) => btn.classList.toggle('active', btn.dataset.filter === filter));
@@ -477,7 +495,7 @@ function initPostsGallery() {
   };
 
   $$('.tool-btn[data-filter]').forEach((btn) => btn.addEventListener('click', () => setFilter(btn.dataset.filter)));
-  $('#searchInput')?.addEventListener('input', () => { currentPage = 1; renderPosts(); });
+  $('#searchInput')?.addEventListener('input', () => { showList(false); currentPage = 1; renderPosts(); });
   $('#randomPostBtn')?.addEventListener('click', () => {
     const list = getFiltered();
     const post = list[Math.floor(Math.random() * list.length)];
@@ -500,18 +518,55 @@ function initPostsGallery() {
     if (stat) { setFilter(stat.dataset.statFilter); $('#posts')?.scrollIntoView({ behavior: 'smooth' }); }
   });
 
-  function openArticle(post) {
+  function showList(push = true) {
+    contentArea?.classList.remove('detail-mode');
+    detailPage?.classList.add('hidden');
+    renderPosts();
+    if (push && new URLSearchParams(location.search).has('post')) {
+      history.pushState({ post: null }, '', location.pathname + location.hash);
+    }
+  }
+
+  function openArticle(post, push = true) {
+    if (!post || !detailPage) return;
+    const slug = getPostSlug(post, allPosts.indexOf(post));
     const img = $('img', post)?.src || '';
-    const title = $('h3', post)?.textContent || post.dataset.title;
-    const meta = $('.meta', post)?.innerHTML || '';
-    const tags = $('.tags', post)?.innerHTML || '';
+    const title = $('h3', post)?.textContent || post.dataset.title || '图片分享';
+    const date = post.dataset.date || '';
+    const category = post.dataset.category || '';
+    const tagsHtml = $('.tags', post)?.innerHTML || '';
     const body = $('p', post)?.textContent.trim() || '';
     const link = post.dataset.link || '';
-    const linkHtml = link ? `<a class="article-modal-link" href="${safeText(link)}" target="_blank" rel="noopener noreferrer">${safeText(link)}</a>` : '';
-    $('#articleModalBody').innerHTML = `<img class="article-modal-img" src="${img}" alt="${safeText(title)}" /><h2>${safeText(title)}</h2><div class="meta">${meta}</div>${body ? `<p>${safeText(body)}</p>` : ''}${linkHtml}<div class="tags">${tags}</div>`;
-    openModal('#articleModal');
+    const linkHtml = link ? `<a class="single-post-link" href="${safeText(link)}" target="_blank" rel="noopener noreferrer">${safeText(link)}</a>` : '';
+    detailPage.innerHTML = `
+      <article class="single-post-card">
+        <button class="single-back" type="button" id="postDetailBack">← 返回文章列表</button>
+        <div class="single-post-head">
+          <div class="single-post-kicker"><span>图片记录</span><span>1 分钟</span></div>
+          <h1>${safeText(title)}</h1>
+          <div class="single-meta"><span>日期 ${safeText(date)}</span><span>分类 ${safeText(category)}</span></div>
+        </div>
+        <img class="single-post-img" src="${img}" alt="${safeText(title)}" />
+        <div class="single-post-content">
+          ${body ? `<p>${safeText(body)}</p>` : '<p class="empty-post-text">这是一张图片分享。</p>'}
+          ${linkHtml ? `<div class="single-link-box"><span>原链接</span>${linkHtml}</div>` : ''}
+          <div class="tags">${tagsHtml}</div>
+        </div>
+      </article>`;
+    contentArea?.classList.add('detail-mode');
+    allPosts.forEach((item) => item.classList.add('hidden'));
+    pagination && (pagination.innerHTML = '');
+    $('#postDetailBack')?.addEventListener('click', () => { showList(true); $('#posts')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+    if (push) history.pushState({ post: slug }, '', `${location.pathname}?post=${encodeURIComponent(slug)}`);
+    $('#posts')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-  allPosts.forEach((post) => post.addEventListener('click', () => openArticle(post)));
+
+  allPosts.forEach((post) => {
+    post.addEventListener('click', () => openArticle(post));
+    post.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openArticle(post); }
+    });
+  });
 
   $('#galleryOpen')?.addEventListener('click', () => {
     $('#galleryGrid').innerHTML = allPosts.map((post, index) => {
@@ -525,9 +580,17 @@ function initPostsGallery() {
     const item = event.target.closest('[data-gallery-index]');
     if (!item) return;
     closeModal($('#galleryModal'));
-    allPosts[Number(item.dataset.galleryIndex)]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    openArticle(allPosts[Number(item.dataset.galleryIndex)]);
   });
   renderPosts();
+  const openFromUrl = () => {
+    const slug = new URLSearchParams(location.search).get('post');
+    if (!slug) { showList(false); return; }
+    const post = allPosts.find((item) => getPostSlug(item) === slug);
+    if (post) openArticle(post, false);
+  };
+  window.addEventListener('popstate', openFromUrl);
+  openFromUrl();
 }
 
 
