@@ -1723,3 +1723,42 @@ body.light .single-link-box { background: rgba(78,125,150,.10); border-color: rg
     padding-bottom: 9px !important;
   }
 }
+
+
+/* 23 Final sidebar scroll fix: 左侧栏不再吸顶固定，跟随页面正常滚动 */
+.sidebar {
+  position: static !important;
+  top: auto !important;
+  align-self: start !important;
+}
+@media (min-width: 901px) {
+  .layout {
+    align-items: start !important;
+  }
+  .sidebar {
+    transform: none !important;
+  }
+}
+
+
+/* 24 Sidebar fixed/sticky restore: 桌面 / iPad 左侧栏固定在顶部栏下方 */
+@media (min-width: 901px) {
+  .layout {
+    align-items: start !important;
+  }
+  .sidebar {
+    position: sticky !important;
+    top: 104px !important;
+    align-self: start !important;
+    height: max-content !important;
+    transform: none !important;
+    z-index: 20 !important;
+  }
+}
+@media (max-width: 900px) {
+  .sidebar {
+    position: static !important;
+    top: auto !important;
+    height: auto !important;
+  }
+}
