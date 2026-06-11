@@ -1702,29 +1702,14 @@ body.light .single-link-box { background: rgba(78,125,150,.10); border-color: rg
 }
 
 
-
-
-/* 23 Safe sidebar sticky fix: restore original layout and prevent top nav collision */
+/* 22 Mobile default collapsed nav + desktop/sidebar scroll fix */
 @media (min-width: 901px) {
+  /* 桌面 / iPad 端：顶部栏为浮层，不再把左侧栏向下顶出大空隙 */
+  .sidebar {
+    top: 28px !important;
+  }
   .layout {
     align-items: start !important;
-  }
-  .sidebar {
-    position: sticky !important;
-    top: 96px !important;
-    align-self: start !important;
-    max-height: calc(100vh - 116px) !important;
-    overflow-y: auto !important;
-    overscroll-behavior: contain !important;
-    z-index: 20 !important;
-  }
-  .sidebar::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
-  .content {
-    min-width: 0 !important;
-    z-index: 1 !important;
   }
 }
 
@@ -1737,8 +1722,56 @@ body.light .single-link-box { background: rgba(78,125,150,.10); border-color: rg
     grid-template-rows: auto !important;
     padding-bottom: 9px !important;
   }
+}
+
+
+/* 23 Pad / PC left sidebar lock fix
+   说明：只在 901px 以上启用。左侧栏先按正常网格显示，滚到文章区时由 JS 锁定到固定位置。
+   不影响手机端上下排列。 */
+@media (min-width: 901px) {
+  .layout {
+    position: relative !important;
+    grid-template-columns: 300px minmax(0, 1fr) !important;
+    align-items: start !important;
+  }
+  .content {
+    grid-column: 2 !important;
+    min-width: 0 !important;
+  }
   .sidebar {
+    grid-column: 1 !important;
+    position: sticky !important;
+    top: 96px !important;
+    align-self: start !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-height: calc(100vh - 116px) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    scrollbar-width: none !important;
+  }
+  .sidebar::-webkit-scrollbar { display: none !important; }
+
+  /* 当滚动到文章区域时，改成固定，不再被顶部导航栏挤着往下走 */
+  .layout.sidebar-lock-active .sidebar {
+    position: fixed !important;
+    left: var(--sidebar-lock-left) !important;
+    top: var(--sidebar-lock-top, 96px) !important;
+    width: var(--sidebar-lock-width) !important;
+    max-height: calc(100vh - var(--sidebar-lock-top, 96px) - 18px) !important;
+    z-index: 30 !important;
+  }
+  .layout.sidebar-lock-active .content {
+    grid-column: 2 !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .layout.sidebar-lock-active .sidebar {
     position: static !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
     max-height: none !important;
     overflow: visible !important;
   }
