@@ -1702,14 +1702,29 @@ body.light .single-link-box { background: rgba(78,125,150,.10); border-color: rg
 }
 
 
-/* 22 Mobile default collapsed nav + desktop/sidebar scroll fix */
+
+
+/* 23 Safe sidebar sticky fix: restore original layout and prevent top nav collision */
 @media (min-width: 901px) {
-  /* 桌面 / iPad 端：顶部栏为浮层，不再把左侧栏向下顶出大空隙 */
-  .sidebar {
-    top: 28px !important;
-  }
   .layout {
     align-items: start !important;
+  }
+  .sidebar {
+    position: sticky !important;
+    top: 96px !important;
+    align-self: start !important;
+    max-height: calc(100vh - 116px) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    z-index: 20 !important;
+  }
+  .sidebar::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+  .content {
+    min-width: 0 !important;
+    z-index: 1 !important;
   }
 }
 
@@ -1722,71 +1737,9 @@ body.light .single-link-box { background: rgba(78,125,150,.10); border-color: rg
     grid-template-rows: auto !important;
     padding-bottom: 9px !important;
   }
-}
-
-
-/* 23 Pad / Desktop fixed sidebar correction
-   说明：只在 iPad / 电脑端启用真正固定左侧栏。左侧栏独立固定，不再被顶部导航顶下或覆盖；手机端仍正常上下排列。 */
-@media (min-width: 901px) {
-  .layout {
-    width: min(1320px, calc(100% - 40px)) !important;
-    grid-template-columns: 300px minmax(0, 1fr) !important;
-    gap: 28px !important;
-    align-items: start !important;
-    position: relative !important;
-  }
-
-  .content {
-    grid-column: 2 !important;
-    min-width: 0 !important;
-  }
-
-  .sidebar {
-    position: fixed !important;
-    left: max(20px, calc((100vw - 1320px) / 2)) !important;
-    top: 96px !important;
-    width: 300px !important;
-    max-width: 300px !important;
-    max-height: calc(100dvh - 116px) !important;
-    overflow-y: auto !important;
-    overscroll-behavior: contain !important;
-    padding-right: 3px !important;
-    z-index: 900 !important;
-    display: grid !important;
-    gap: 18px !important;
-    scrollbar-width: thin !important;
-    transform: none !important;
-  }
-
-  .sidebar::-webkit-scrollbar { width: 4px; }
-  .sidebar::-webkit-scrollbar-thumb { background: rgba(159,185,201,.28); border-radius: 999px; }
-}
-
-@media (min-width: 901px) and (max-width: 1360px) {
-  .sidebar { left: 20px !important; }
-  .layout { width: calc(100vw - 40px) !important; }
-}
-
-@media (min-width: 901px) and (max-width: 1120px) {
-  .layout {
-    grid-template-columns: 280px minmax(0, 1fr) !important;
-    gap: 22px !important;
-  }
-  .sidebar {
-    width: 280px !important;
-    max-width: 280px !important;
-  }
-}
-
-@media (max-width: 900px) {
   .sidebar {
     position: static !important;
-    width: 100% !important;
-    max-width: none !important;
     max-height: none !important;
     overflow: visible !important;
-    padding-right: 0 !important;
-    z-index: auto !important;
   }
-  .content { grid-column: auto !important; }
 }
