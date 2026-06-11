@@ -1700,3 +1700,26 @@ body.light .single-link-box { background: rgba(78,125,150,.10); border-color: rg
 .single-post-card {
   width: 100%;
 }
+
+
+/* 22 Mobile default collapsed nav + desktop/sidebar scroll fix */
+@media (min-width: 901px) {
+  /* 桌面 / iPad 端：顶部栏为浮层，不再把左侧栏向下顶出大空隙 */
+  .sidebar {
+    top: 28px !important;
+  }
+  .layout {
+    align-items: start !important;
+  }
+}
+
+@media (max-width: 900px) {
+  /* 手机端进入网站默认收起第二行导航，点击箭头可展开 */
+  .site-nav.mobile-links-collapsed .nav-links {
+    display: none !important;
+  }
+  .site-nav.mobile-links-collapsed {
+    grid-template-rows: auto !important;
+    padding-bottom: 9px !important;
+  }
+}

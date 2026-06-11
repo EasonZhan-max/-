@@ -261,7 +261,7 @@ function initNavigation() {
       setMobileNavCollapsed(false);
       return;
     }
-    const saved = localStorage.getItem('eason-mobile-nav-collapsed') === '1';
+    const saved = localStorage.getItem('eason-mobile-nav-collapsed') !== '0';
     setMobileNavCollapsed(saved);
   };
   window.addEventListener('scroll', sync, { passive: true });
