@@ -611,47 +611,6 @@ function initModals() {
   $('#notice')?.addEventListener('click', (event) => { if (!event.target.closest('a')) openModal('#noticeModal'); });
 }
 
-
-
-/* 09.5 Pad / PC sidebar lock
-   使用 fixed 锁定左侧栏，但只在文章区接近顶部时启用，避免在首页大图阶段覆盖画面。 */
-function initSidebarLock() {
-  const layout = $('.layout');
-  const sidebar = $('.sidebar');
-  const mq = window.matchMedia('(min-width: 901px)');
-  if (!layout || !sidebar) return;
-
-  const update = () => {
-    if (!mq.matches) {
-      layout.classList.remove('sidebar-lock-active');
-      layout.style.removeProperty('--sidebar-lock-left');
-      layout.style.removeProperty('--sidebar-lock-width');
-      layout.style.removeProperty('--sidebar-lock-top');
-      return;
-    }
-
-    const layoutRect = layout.getBoundingClientRect();
-    const layoutTop = layoutRect.top + window.scrollY;
-    const layoutBottom = layoutTop + layout.offsetHeight;
-    const viewportTop = window.scrollY;
-
-    // 在文章区快到屏幕上方时就锁定，避免顶部栏把左侧栏顶下去。
-    const lockTop = 96;
-    const activateAt = layoutTop - lockTop - 26;
-    const shouldLock = viewportTop >= activateAt && viewportTop < layoutBottom - sidebar.offsetHeight - 24;
-
-    layout.style.setProperty('--sidebar-lock-left', `${Math.round(layoutRect.left)}px`);
-    layout.style.setProperty('--sidebar-lock-width', `${Math.round(sidebar.getBoundingClientRect().width || 300)}px`);
-    layout.style.setProperty('--sidebar-lock-top', `${lockTop}px`);
-    layout.classList.toggle('sidebar-lock-active', shouldLock);
-  };
-
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update, { passive: true });
-  mq.addEventListener?.('change', update);
-  requestAnimationFrame(update);
-}
-
 function initFooterStats() {
   const days = Math.max(1, Math.ceil((Date.now() - new Date(CONFIG.siteStartDate).getTime()) / 86400000));
   const articleCount = $$('.post').length;
@@ -667,7 +626,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initStars();
   initMeteors();
   initNavigation();
-  initSidebarLock();
   initMusic();
   initPostsGallery();
   initModals();
