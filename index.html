@@ -8,7 +8,7 @@
   <link rel="icon" type="image/jpeg" href="assets/images/avatar.jpg" />
   <link rel="apple-touch-icon" href="assets/images/avatar.jpg" />
   <meta name="apple-mobile-web-app-title" content="Eason | 个人博客" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20260612-sidebar-sync1" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260612-tagfix1" />
 </head>
 <body>
   <!-- 背景层：星星、雾光、流星 -->
@@ -149,24 +149,24 @@
           </div>
           <div class="tool-actions">
             <button class="tool-btn active" type="button" data-filter="all">全部文章</button>
-            <button class="tool-btn" type="button" data-filter="日常">日常</button>
+            <button class="tool-btn" type="button" data-filter="游戏日常">游戏日常</button>
             <button class="tool-btn" type="button" data-filter="相册">相册</button>
             <button class="tool-btn" type="button" id="randomPostBtn">随机漫步</button>
           </div>
         </section>
 
         <div class="posts" id="postList">
-          <article class="post" data-title="图片分享" data-date="2026-06-10" data-category="相册" data-tags="vrchat,相册,游戏">
+          <article class="post" data-title="图片分享" data-date="2026-06-10" data-category="相册" data-tags="vrchat,相册,游戏日常">
             <div class="post-thumb"><img src="assets/images/post-2026-06-10.jpg" alt="VRChat游戏图片分享" /></div>
-            <div class="post-body"><h3>图片分享</h3><div class="meta"><span>日期 2026-06-10</span><span>分类 相册</span></div><p></p><div class="tags"><span>#vrchat</span><span>#相册</span><span>#游戏</span></div></div>
+            <div class="post-body"><h3>图片分享</h3><div class="meta"><span>日期 2026-06-10</span><span>分类 相册</span></div><p></p><div class="tags"><span>#vrchat</span><span>#相册</span><span>#游戏日常</span></div></div>
           </article>
           <article class="post" data-title="图片分享" data-date="2026-06-09" data-category="相册" data-tags="vrchat,相册" data-link="https://v.douyin.com/8YfxAOhFQlE">
             <div class="post-thumb"><img src="assets/images/post-2026-06-09.jpg" alt="VRChat图片分享" /></div>
             <div class="post-body"><h3>图片分享</h3><div class="meta"><span>日期 2026-06-09</span><span>分类 相册</span></div><p></p><div class="tags"><span>#vrchat</span><span>#相册</span></div></div>
           </article>
-          <article class="post" data-title="图片分享" data-date="2026-06-08" data-category="相册" data-tags="vrchat,相册,游戏">
+          <article class="post" data-title="图片分享" data-date="2026-06-08" data-category="相册" data-tags="vrchat,相册,游戏日常">
             <div class="post-thumb"><img src="assets/images/post-2026-06-08.jpg" alt="VRChat游戏图片分享" /></div>
-            <div class="post-body"><h3>图片分享</h3><div class="meta"><span>日期 2026-06-08</span><span>分类 相册</span></div><p></p><div class="tags"><span>#vrchat</span><span>#相册</span><span>#游戏</span></div></div>
+            <div class="post-body"><h3>图片分享</h3><div class="meta"><span>日期 2026-06-08</span><span>分类 相册</span></div><p></p><div class="tags"><span>#vrchat</span><span>#相册</span><span>#游戏日常</span></div></div>
           </article>
           <article class="post" data-title="图片分享" data-date="2026-06-07" data-category="相册" data-tags="vrchat,相册">
             <div class="post-thumb"><img src="assets/images/post-2026-06-07.jpg" alt="VRChat图片分享" /></div>
@@ -180,9 +180,9 @@
             <div class="post-thumb"><img src="assets/images/post-cats.jpg" alt="猫猫合集相册" /></div>
             <div class="post-body"><h3>图片分享</h3><div class="meta"><span>日期 2026-06-02</span><span>分类 相册</span></div><p></p><div class="tags"><span>#vrchat</span><span>#相册</span></div></div>
           </article>
-          <article class="post" data-title="图片分享" data-date="2026-05-31" data-category="日常" data-tags="vrchat,日常">
+          <article class="post" data-title="图片分享" data-date="2026-05-31" data-category="相册" data-tags="vrchat,游戏日常,相册">
             <div class="post-thumb"><img src="assets/images/post-fishing.png" alt="VRChat钓鱼日常" /></div>
-            <div class="post-body"><h3>图片分享</h3><div class="meta"><span>日期 2026-05-31</span><span>分类 日常</span></div><p></p><div class="tags"><span>#vrchat</span><span>#日常</span></div></div>
+            <div class="post-body"><h3>图片分享</h3><div class="meta"><span>日期 2026-05-31</span><span>分类 相册</span></div><p></p><div class="tags"><span>#vrchat</span><span>#游戏日常</span><span>#相册</span></div></div>
           </article>
         </div>
         <section class="post-detail-page hidden" id="postDetailPage" aria-live="polite"></section>
@@ -249,6 +249,6 @@
 
   <div class="top-music-popover" id="topMusicPopover" aria-hidden="true"><div class="top-music-card"><div class="top-music-main"><img class="top-music-cover" id="topMusicCover" src="assets/images/cover-yidian.jpg" alt="音乐封面" /><div class="top-music-info"><div class="top-music-title" id="topMusicTitle">一点</div><div class="top-music-sub" id="topMusicSub">muyoi pezzi</div><div class="top-music-time" id="topMusicTime">0:00 / 0:00</div></div><button class="top-close" type="button" id="topMusicClose" aria-label="关闭音乐弹窗">×</button></div><input class="top-progress" id="topMusicProgress" type="range" min="0" max="100" value="0" /><div class="top-music-controls"><button type="button" id="topMusicMode">循环</button><button type="button" id="topMusicPrev">上一首</button><button type="button" class="top-play" id="topMusicPlay">播放</button><button type="button" id="topMusicNext">下一首</button><button type="button" id="topMusicList">歌单</button></div><div class="top-playlist-panel" id="topMusicPlaylist"></div></div></div>
 
-  <script src="assets/js/main.js?v=20260612-sidebar-sync1"></script>
+  <script src="assets/js/main.js?v=20260612-tagfix1"></script>
 </body>
 </html>
