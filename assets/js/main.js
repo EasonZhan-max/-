@@ -486,6 +486,25 @@ function initPostsGallery() {
   const contentArea = $('.content');
   let currentFilter = 'all';
   let currentPage = 1;
+  let lastListScrollTop = 0;
+
+  const saveListScrollTop = () => {
+    lastListScrollTop = getScrollTop();
+    try { sessionStorage.setItem('eason-post-list-scroll', String(lastListScrollTop)); } catch (error) {}
+  };
+  const getSavedListScrollTop = () => {
+    try {
+      const raw = sessionStorage.getItem('eason-post-list-scroll');
+      if (raw !== null && raw !== '') return Number(raw) || 0;
+    } catch (error) {}
+    return Number(lastListScrollTop) || 0;
+  };
+  const restoreListScrollTop = (smooth = true) => {
+    const top = getSavedListScrollTop();
+    requestAnimationFrame(() => {
+      window.scrollTo({ top, left: 0, behavior: smooth ? 'smooth' : 'auto' });
+    });
+  };
 
   const slugify = (text) => String(text || '').toLowerCase().replace(/[^a-z0-9一-龥]+/g, '-').replace(/^-|-$/g, '') || 'post';
   const getPostSlug = (post, index = 0) => {
@@ -576,17 +595,19 @@ function initPostsGallery() {
     if (stat) { setFilter(stat.dataset.statFilter); $('#posts')?.scrollIntoView({ behavior: 'smooth' }); }
   });
 
-  function showList(push = true) {
+  function showList(push = true, restore = false) {
     contentArea?.classList.remove('detail-mode');
     detailPage?.classList.add('hidden');
     renderPosts();
     if (push && new URLSearchParams(location.search).has('post')) {
-      history.pushState({ post: null }, '', location.pathname + location.hash);
+      history.pushState({ post: null, listScroll: getSavedListScrollTop() }, '', location.pathname + location.hash);
     }
+    if (restore) restoreListScrollTop(true);
   }
 
   function openArticle(post, push = true) {
     if (!post || !detailPage) return;
+    if (!contentArea?.classList.contains('detail-mode')) saveListScrollTop();
     const slug = getPostSlug(post, allPosts.indexOf(post));
     const img = $('img', post)?.src || '';
     const title = $('h3', post)?.textContent || post.dataset.title || '图片分享';
@@ -615,8 +636,11 @@ function initPostsGallery() {
     contentArea?.classList.add('detail-mode');
     allPosts.forEach((item) => item.classList.add('hidden'));
     pagination && (pagination.innerHTML = '');
-    $('#postDetailBack')?.addEventListener('click', () => { showList(true); $('#posts')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
-    if (push) history.pushState({ post: slug }, '', `${location.pathname}?post=${encodeURIComponent(slug)}`);
+    $('#postDetailBack')?.addEventListener('click', () => {
+      showList(true, false);
+      restoreListScrollTop(true);
+    });
+    if (push) history.pushState({ post: slug, listScroll: getSavedListScrollTop() }, '', `${location.pathname}?post=${encodeURIComponent(slug)}`);
     $('#posts')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -644,10 +668,15 @@ function initPostsGallery() {
   renderPosts();
   const openFromUrl = () => {
     const slug = new URLSearchParams(location.search).get('post');
-    if (!slug) { showList(false); return; }
+    if (!slug) {
+      if (history.state && typeof history.state.listScroll === 'number') lastListScrollTop = history.state.listScroll;
+      showList(false, false);
+      if (history.state && typeof history.state.listScroll === 'number') restoreListScrollTop(false);
+      return;
+    }
     const post = allPosts.find((item) => getPostSlug(item) === slug);
     if (post) openArticle(post, false);
-    else showList(false);
+    else showList(false, false);
   };
   window.addEventListener('popstate', openFromUrl);
   openFromUrl();

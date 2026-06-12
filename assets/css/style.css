@@ -1996,3 +1996,25 @@ html[data-theme="light"] .tip-btn.primary {
   #topMusicPlay.is-playing::before { font-size: 30px !important; }
   #topMusicList::before { font-size: 28px !important; }
 }
+
+
+/* 25 Top music icon cleanup + post-list position restore */
+.top-music-controls button::before {
+  content: none !important;
+  display: none !important;
+}
+.top-music-controls button > svg {
+  display: block !important;
+}
+.top-music-controls button {
+  font-size: inherit !important;
+}
+#topMusicMode[data-mode="single"]::after {
+  content: "1" !important;
+}
+@media (max-width: 900px) {
+  .top-music-controls button > svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+}
