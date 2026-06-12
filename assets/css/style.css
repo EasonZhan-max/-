@@ -1915,3 +1915,84 @@ html[data-theme="light"] .tip-btn.primary {
     top: 8px;
   }
 }
+
+
+/* 24 Top music final fix: close hit-area, mobile icons, backtop centering */
+.top-music-popover:not(.show),
+.top-music-popover[aria-hidden="true"] {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+.top-music-popover:not(.show) *,
+.top-music-popover[aria-hidden="true"] * {
+  pointer-events: none !important;
+}
+.top-music-popover.show,
+.top-music-popover[aria-hidden="false"] {
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+.backtop {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+}
+.backtop svg {
+  width: 26px !important;
+  height: 26px !important;
+  display: block !important;
+  stroke: currentColor !important;
+  fill: none !important;
+  stroke-width: 2.3 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+.top-music-controls button {
+  isolation: isolate;
+}
+.top-music-controls button::before {
+  content: "";
+  display: block;
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 900;
+  color: currentColor;
+  text-align: center;
+  pointer-events: none;
+}
+.top-music-controls button > svg {
+  display: none !important;
+}
+#topMusicMode[data-mode="loop"]::before { content: "↻"; }
+#topMusicMode[data-mode="list"]::before { content: "↦"; }
+#topMusicMode[data-mode="single"]::before { content: "↻"; }
+#topMusicPrev::before { content: "⏮"; font-size: 27px; }
+#topMusicPlay::before { content: "▶"; font-size: 28px; }
+#topMusicPlay.is-playing::before { content: "Ⅱ"; font-size: 31px; letter-spacing: -3px; transform: translateX(-1px); }
+#topMusicNext::before { content: "⏭"; font-size: 27px; }
+#topMusicList::before { content: "☰"; font-size: 30px; }
+#topMusicMode[data-mode="single"]::after {
+  content: "1" !important;
+}
+@media (max-width: 900px) {
+  .backtop {
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 16px !important;
+    right: 18px !important;
+    bottom: calc(18px + env(safe-area-inset-bottom)) !important;
+  }
+  .backtop svg {
+    width: 24px !important;
+    height: 24px !important;
+  }
+  .top-music-controls button::before { font-size: 29px !important; }
+  #topMusicPrev::before, #topMusicNext::before { font-size: 25px !important; }
+  #topMusicPlay::before { font-size: 27px !important; }
+  #topMusicPlay.is-playing::before { font-size: 30px !important; }
+  #topMusicList::before { font-size: 28px !important; }
+}

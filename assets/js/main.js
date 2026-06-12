@@ -373,6 +373,7 @@ function initMusic() {
     $('#playBtn') && ($('#playBtn').innerHTML = isPlaying ? pauseIcon : playIcon);
     setText('#modalPlayBtn', isPlaying ? '暂停' : '播放');
     setTopButton('#topMusicPlay', isPlaying ? topIcons.pause : topIcons.play, isPlaying ? '暂停' : '播放');
+    $('#topMusicPlay')?.classList.toggle('is-playing', isPlaying);
     setTopButton('#topMusicPrev', topIcons.prev, '上一首');
     setTopButton('#topMusicNext', topIcons.next, '下一首');
     setTopButton('#topMusicList', topIcons.list, '歌单');
@@ -404,16 +405,37 @@ function initMusic() {
     setText('#topMusicTime', `${fmtTime(currentTime)} / ${fmtTime(duration)}`);
   };
   const seek = (value) => { if (audio.duration) audio.currentTime = (Number(value) / 100) * audio.duration; };
+  const topPopover = $('#topMusicPopover');
+  const topPlaylistPanel = $('#topMusicPlaylist');
+  const openTopMusic = () => {
+    topPopover?.classList.add('show');
+    topPopover?.setAttribute('aria-hidden', 'false');
+  };
+  const closeTopMusic = () => {
+    topPopover?.classList.remove('show');
+    topPopover?.setAttribute('aria-hidden', 'true');
+    topPlaylistPanel?.classList.remove('show');
+  };
+  const toggleTopMusic = () => topPopover?.classList.contains('show') ? closeTopMusic() : openTopMusic();
 
   const bindMusicBtn = (selector, handler) => $(selector)?.addEventListener('click', (event) => { event.preventDefault(); event.stopPropagation(); handler(); });
   ['#playBtn', '#modalPlayBtn'].forEach((selector) => bindMusicBtn(selector, playPause));
   ['#nextBtn', '#modalNextBtn'].forEach((selector) => bindMusicBtn(selector, nextSong));
   ['#prevBtn', '#modalPrevBtn'].forEach((selector) => bindMusicBtn(selector, prevSong));
   ['#loopModeBtn', '#modalLoopModeBtn'].forEach((selector) => bindMusicBtn(selector, cycleMode));
-  bindMusicBtn('#topMusicPlay', playPause);
-  bindMusicBtn('#topMusicNext', nextSong);
-  bindMusicBtn('#topMusicPrev', prevSong);
-  bindMusicBtn('#topMusicMode', cycleMode);
+  const topControls = $('.top-music-controls');
+  topControls?.addEventListener('click', (event) => {
+    const btn = event.target.closest('button');
+    if (!btn || !topControls.contains(btn)) return;
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    if (btn.id === 'topMusicPlay') playPause();
+    if (btn.id === 'topMusicNext') nextSong();
+    if (btn.id === 'topMusicPrev') prevSong();
+    if (btn.id === 'topMusicMode') cycleMode();
+    if (btn.id === 'topMusicList') topPlaylistPanel?.classList.toggle('show');
+  }, true);
   ['#progress', '#musicModalProgress', '#topMusicProgress'].forEach((selector) => $(selector)?.addEventListener('input', (e) => seek(e.target.value)));
   ['#playlistTrigger', '#modalPlaylistTrigger'].forEach((selector) => $(selector)?.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -421,7 +443,6 @@ function initMusic() {
     dropdown?.classList.toggle('open');
     $('#music')?.classList.toggle('music-panel-open', !!$('#playlistDropdown')?.classList.contains('open'));
   }));
-  $('#topMusicList')?.addEventListener('click', () => $('#topMusicPlaylist')?.classList.toggle('show'));
   document.addEventListener('click', (event) => {
     if (!event.target.closest('.playlist-dropdown')) {
       $$('.playlist-dropdown.open').forEach((el) => el.classList.remove('open'));
@@ -433,16 +454,17 @@ function initMusic() {
     if (!item) return;
     loadSong(Number(item.dataset.songIndex), true);
   });
-  $('#musicQuick')?.addEventListener('click', () => $('#topMusicPopover')?.classList.toggle('show'));
-  $('#topMusicClose')?.addEventListener('click', () => $('#topMusicPopover')?.classList.remove('show'));
+  $('#musicQuick')?.addEventListener('click', toggleTopMusic);
+  $('#topMusicClose')?.addEventListener('click', closeTopMusic);
   $('#music')?.addEventListener('click', (event) => { if (!event.target.closest('button,input,.playlist-dropdown')) openModal('#musicModal'); });
-  $('#musicPromptYes')?.addEventListener('click', () => { $('#musicPlayTip')?.classList.remove('show'); audio.play().catch(() => {}); $('#topMusicPopover')?.classList.add('show'); });
+  $('#musicPromptYes')?.addEventListener('click', () => { $('#musicPlayTip')?.classList.remove('show'); audio.play().catch(() => {}); openTopMusic(); });
   $('#musicPromptNo')?.addEventListener('click', () => { $('#musicPlayTip')?.classList.remove('show'); });
   audio.addEventListener('play', updateUI);
   audio.addEventListener('pause', updateUI);
   audio.addEventListener('timeupdate', syncProgress);
   audio.addEventListener('loadedmetadata', syncProgress);
   audio.addEventListener('ended', nextSong);
+  closeTopMusic();
   syncMode();
   loadSong(0, false);
   window.addEventListener('load', () => { setTimeout(() => $('#musicPlayTip')?.classList.add('show'), 500); }, { once: true });
