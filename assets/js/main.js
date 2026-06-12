@@ -487,9 +487,10 @@ function initPostsGallery() {
   let currentFilter = 'all';
   let currentPage = 1;
   let lastListScrollTop = 0;
+  const getPageScrollTop = () => Math.max(window.scrollY || 0, document.documentElement.scrollTop || 0, document.body.scrollTop || 0);
 
   const saveListScrollTop = () => {
-    lastListScrollTop = getScrollTop();
+    lastListScrollTop = getPageScrollTop();
     try { sessionStorage.setItem('eason-post-list-scroll', String(lastListScrollTop)); } catch (error) {}
   };
   const getSavedListScrollTop = () => {
