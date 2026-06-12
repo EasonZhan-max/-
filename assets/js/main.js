@@ -322,6 +322,21 @@ function initMusic() {
   const playIcon = '<svg id="playIcon" viewBox="0 0 24 24"><path d="M8 6l10 6-10 6V6z"></path></svg>';
   const pauseIcon = '<svg id="playIcon" viewBox="0 0 24 24"><path d="M9 6v12M15 6v12"></path></svg>';
   const modeNames = { list: '顺序播放', loop: '列表循环', single: '单曲循环' };
+  const topIcons = {
+    mode: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8v8"></path><path d="M3 12a9 9 0 0 1 15.54-6.36L21 8"></path><path d="M3 16l2.46 2.36A9 9 0 0 0 21 12"></path></svg>',
+    prev: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19L2 12l9-7v14z"></path><path d="M22 19L13 12l9-7v14z"></path></svg>',
+    play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l10 6-10 6V6z"></path></svg>',
+    pause: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12"></path><path d="M15 6v12"></path></svg>',
+    next: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 5l9 7-9 7V5z"></path><path d="M2 5l9 7-9 7V5z"></path></svg>',
+    list: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13"></path><path d="M8 12h13"></path><path d="M8 18h13"></path><path d="M3.5 6h.01"></path><path d="M3.5 12h.01"></path><path d="M3.5 18h.01"></path></svg>'
+  };
+  const setTopButton = (selector, icon, label) => {
+    const btn = $(selector);
+    if (!btn) return;
+    btn.innerHTML = `${icon}<span class="btn-label">${label}</span>`;
+    btn.setAttribute('aria-label', label);
+    btn.setAttribute('title', label);
+  };
 
   const current = () => CONFIG.playlist[songIndex];
   const setText = (selector, text) => { const el = $(selector); if (el) el.textContent = text; };
@@ -336,6 +351,9 @@ function initMusic() {
   };
   const syncMode = () => {
     ['#loopModeBtn', '#modalLoopModeBtn'].forEach((selector) => setText(selector, modeNames[playMode]));
+    setTopButton('#topMusicMode', topIcons.mode, modeNames[playMode]);
+    const topMode = $('#topMusicMode');
+    if (topMode) topMode.dataset.mode = playMode;
     localStorage.setItem('eason-play-mode', playMode);
   };
   const updateUI = () => {
@@ -351,7 +369,10 @@ function initMusic() {
     ['#albumCover', '#musicModalCoverWrap'].forEach((selector) => $(selector)?.classList.toggle('playing', isPlaying));
     $('#playBtn') && ($('#playBtn').innerHTML = isPlaying ? pauseIcon : playIcon);
     setText('#modalPlayBtn', isPlaying ? '暂停' : '播放');
-    setText('#topMusicPlay', isPlaying ? '暂停' : '播放');
+    setTopButton('#topMusicPlay', isPlaying ? topIcons.pause : topIcons.play, isPlaying ? '暂停' : '播放');
+    setTopButton('#topMusicPrev', topIcons.prev, '上一首');
+    setTopButton('#topMusicNext', topIcons.next, '下一首');
+    setTopButton('#topMusicList', topIcons.list, '歌单');
     renderMenus();
   };
   const loadSong = (index, autoplay = false) => {
