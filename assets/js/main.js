@@ -323,13 +323,16 @@ function initMusic() {
   const pauseIcon = '<svg id="playIcon" viewBox="0 0 24 24"><path d="M9 6v12M15 6v12"></path></svg>';
   const modeNames = { list: '顺序播放', loop: '列表循环', single: '单曲循环' };
   const topIcons = {
-    mode: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8v8"></path><path d="M3 12a9 9 0 0 1 15.54-6.36L21 8"></path><path d="M3 16l2.46 2.36A9 9 0 0 0 21 12"></path></svg>',
-    prev: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19L2 12l9-7v14z"></path><path d="M22 19L13 12l9-7v14z"></path></svg>',
-    play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l10 6-10 6V6z"></path></svg>',
-    pause: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12"></path><path d="M15 6v12"></path></svg>',
-    next: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 5l9 7-9 7V5z"></path><path d="M2 5l9 7-9 7V5z"></path></svg>',
+    listMode: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h11"></path><path d="M16 6l3 3-3 3"></path><path d="M5 18h14"></path></svg>',
+    loopMode: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 2l4 4-4 4"></path><path d="M3 11V9a3 3 0 0 1 3-3h15"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v2a3 3 0 0 1-3 3H3"></path></svg>',
+    singleMode: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 2l4 4-4 4"></path><path d="M3 11V9a3 3 0 0 1 3-3h15"></path><path d="M7 22l-4-4 4-4"></path><path d="M21 13v2a3 3 0 0 1-3 3H3"></path><path d="M12 9v6"></path><path d="M10.5 10.5L12 9l1.5 1.5"></path></svg>',
+    prev: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 19L3 12l8-7"></path><path d="M20 19l-8-7 8-7"></path></svg>',
+    play: '<svg viewBox="0 0 24 24" aria-hidden="true" class="fill-icon"><path d="M8 5.5v13l11-6.5-11-6.5z"></path></svg>',
+    pause: '<svg viewBox="0 0 24 24" aria-hidden="true" class="fill-icon"><rect x="7" y="5" width="4" height="14" rx="1.4"></rect><rect x="13" y="5" width="4" height="14" rx="1.4"></rect></svg>',
+    next: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 5l8 7-8 7"></path><path d="M4 5l8 7-8 7"></path></svg>',
     list: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13"></path><path d="M8 12h13"></path><path d="M8 18h13"></path><path d="M3.5 6h.01"></path><path d="M3.5 12h.01"></path><path d="M3.5 18h.01"></path></svg>'
   };
+  const modeIcon = () => playMode === 'list' ? topIcons.listMode : playMode === 'single' ? topIcons.singleMode : topIcons.loopMode;
   const setTopButton = (selector, icon, label) => {
     const btn = $(selector);
     if (!btn) return;
@@ -351,7 +354,7 @@ function initMusic() {
   };
   const syncMode = () => {
     ['#loopModeBtn', '#modalLoopModeBtn'].forEach((selector) => setText(selector, modeNames[playMode]));
-    setTopButton('#topMusicMode', topIcons.mode, modeNames[playMode]);
+    setTopButton('#topMusicMode', modeIcon(), modeNames[playMode]);
     const topMode = $('#topMusicMode');
     if (topMode) topMode.dataset.mode = playMode;
     localStorage.setItem('eason-play-mode', playMode);
@@ -402,10 +405,15 @@ function initMusic() {
   };
   const seek = (value) => { if (audio.duration) audio.currentTime = (Number(value) / 100) * audio.duration; };
 
-  ['#playBtn', '#modalPlayBtn', '#topMusicPlay'].forEach((selector) => $(selector)?.addEventListener('click', playPause));
-  ['#nextBtn', '#modalNextBtn', '#topMusicNext'].forEach((selector) => $(selector)?.addEventListener('click', nextSong));
-  ['#prevBtn', '#modalPrevBtn', '#topMusicPrev'].forEach((selector) => $(selector)?.addEventListener('click', prevSong));
-  ['#loopModeBtn', '#modalLoopModeBtn', '#topMusicMode'].forEach((selector) => $(selector)?.addEventListener('click', cycleMode));
+  const bindMusicBtn = (selector, handler) => $(selector)?.addEventListener('click', (event) => { event.preventDefault(); event.stopPropagation(); handler(); });
+  ['#playBtn', '#modalPlayBtn'].forEach((selector) => bindMusicBtn(selector, playPause));
+  ['#nextBtn', '#modalNextBtn'].forEach((selector) => bindMusicBtn(selector, nextSong));
+  ['#prevBtn', '#modalPrevBtn'].forEach((selector) => bindMusicBtn(selector, prevSong));
+  ['#loopModeBtn', '#modalLoopModeBtn'].forEach((selector) => bindMusicBtn(selector, cycleMode));
+  bindMusicBtn('#topMusicPlay', playPause);
+  bindMusicBtn('#topMusicNext', nextSong);
+  bindMusicBtn('#topMusicPrev', prevSong);
+  bindMusicBtn('#topMusicMode', cycleMode);
   ['#progress', '#musicModalProgress', '#topMusicProgress'].forEach((selector) => $(selector)?.addEventListener('input', (e) => seek(e.target.value)));
   ['#playlistTrigger', '#modalPlaylistTrigger'].forEach((selector) => $(selector)?.addEventListener('click', (e) => {
     e.stopPropagation();

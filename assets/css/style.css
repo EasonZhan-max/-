@@ -1868,3 +1868,50 @@ html[data-theme="light"] .tip-btn.primary {
     height: 21px !important;
   }
 }
+
+
+/* 23 Top music control icon bugfix：暂停图标、下一首、模式图标 */
+.top-music-controls button {
+  position: relative;
+  pointer-events: auto !important;
+  user-select: none;
+}
+.top-music-controls button svg,
+.top-music-controls button .btn-label {
+  pointer-events: none !important;
+}
+.top-music-controls button svg {
+  stroke: currentColor !important;
+  fill: none !important;
+}
+.top-music-controls button svg.fill-icon,
+.top-music-controls button svg.fill-icon * {
+  fill: currentColor !important;
+  stroke: none !important;
+}
+.top-music-controls .top-play svg.fill-icon,
+.top-music-controls .top-play svg.fill-icon * {
+  fill: currentColor !important;
+  stroke: none !important;
+}
+#topMusicMode[data-mode="single"]::after {
+  content: "1";
+  position: absolute;
+  right: 13px;
+  top: 12px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  font-weight: 900;
+  background: rgba(255,255,255,.18);
+  color: currentColor;
+}
+@media (max-width: 900px) {
+  #topMusicMode[data-mode="single"]::after {
+    right: 8px;
+    top: 8px;
+  }
+}
