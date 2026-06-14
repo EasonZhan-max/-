@@ -13,6 +13,17 @@
   10 Responsive       三端适配
 */
 
+
+/* =========================================================
+   28 可维护标注 / 修改入口
+   - 顶部栏按钮悬浮动画：看 .nav-links a / .nav-link-btn / .icon-btn / .tip-btn。
+   - 卡片外观：看 .panel, .article-tools, .post, .info-card。
+   - 文章列表布局：看 .posts 和 .post。
+   - 手机端适配：看 @media (max-width: 900px) 和 @media (max-width: 680px)。
+   - 调色板弹窗：看 #paletteModal 开头的规则。
+   说明：这段只做标注，不会影响显示。
+   ========================================================= */
+
 /* 01 Theme Tokens */
 :root {
   --mist: #9fb9c9;
@@ -2060,22 +2071,88 @@ html[data-theme="light"] .tip-btn.primary {
 }
 
 
-/* 27 Site rename/avatar/runtime + desktop hover feedback */
-@media (hover: hover) and (pointer: fine) and (min-width: 901px) {
-  .panel,
-  .article-tools,
-  .site-nav {
-    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-  }
-  .panel:hover,
-  .article-tools:hover,
-  .site-nav:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 22px 48px rgba(0, 0, 0, .24);
-  }
-}
+/* 28 Topbar-only hover/select animation + music prompt button feedback */
 #runFooter {
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   letter-spacing: .02em;
+}
+@media (hover: hover) and (pointer: fine) {
+  .site-nav:hover {
+    transform: none !important;
+    box-shadow: var(--shadow) !important;
+  }
+  .site-nav .brand,
+  .site-nav .nav-links > a,
+  .site-nav .nav-link-btn,
+  .site-nav .icon-btn {
+    position: relative;
+    transition: transform .22s ease, background .22s ease, box-shadow .22s ease, color .22s ease, border-color .22s ease, filter .22s ease;
+  }
+  .site-nav .brand:hover,
+  .site-nav .nav-links > a:hover,
+  .site-nav .nav-link-btn:hover,
+  .site-nav .icon-btn:hover {
+    transform: translateY(-2px) scale(1.025);
+    background: rgba(159,185,201,.18);
+    box-shadow: 0 12px 26px rgba(0,0,0,.22);
+    border-color: rgba(255,255,255,.22);
+    color: var(--text);
+  }
+  .site-nav .brand:active,
+  .site-nav .nav-links > a:active,
+  .site-nav .nav-link-btn:active,
+  .site-nav .icon-btn:active {
+    transform: translateY(0) scale(.98);
+    filter: brightness(.96);
+  }
+  .site-nav .nav-dropdown.open > .nav-link-btn,
+  .site-nav .icon-btn.active,
+  .site-nav .nav-links > a.active {
+    background: linear-gradient(135deg, rgba(159,190,218,.28), rgba(211,163,195,.18));
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.16), 0 12px 26px rgba(0,0,0,.20);
+    color: var(--text);
+  }
+  .music-play-tip .tip-btn {
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, filter .2s ease;
+  }
+  .music-play-tip .tip-btn:hover {
+    transform: translateY(-2px) scale(1.035);
+    box-shadow: 0 10px 22px rgba(0,0,0,.22);
+    border-color: rgba(255,255,255,.22) !important;
+  }
+  .music-play-tip .tip-btn:active {
+    transform: translateY(0) scale(.96);
+    filter: brightness(.95);
+  }
+}
+.site-nav .nav-links > a:focus-visible,
+.site-nav .nav-link-btn:focus-visible,
+.site-nav .icon-btn:focus-visible,
+.music-play-tip .tip-btn:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--mist), white 35%);
+  outline-offset: 3px;
+}
+@media (max-width: 900px) {
+  .site-nav .brand,
+  .site-nav .nav-links > a,
+  .site-nav .nav-link-btn,
+  .site-nav .icon-btn,
+  .music-play-tip .tip-btn {
+    transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+  }
+  .site-nav .brand:active,
+  .site-nav .nav-links > a:active,
+  .site-nav .nav-link-btn:active,
+  .site-nav .icon-btn:active,
+  .music-play-tip .tip-btn:active {
+    transform: scale(.96);
+    box-shadow: 0 8px 18px rgba(0,0,0,.20);
+  }
+}
+
+
+/* 29 顶部栏左上角小头像：使用 nav-avatar.jpg，保持小头像圆角裁剪 */
+.brand img {
+  object-fit: cover;
 }

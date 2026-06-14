@@ -11,6 +11,17 @@
   <link rel="stylesheet" href="assets/css/style.css?v=20260614-easonsite-avatar-hover-runtime" />
 </head>
 <body>
+
+  <!--
+    ===================== Eason 小站修改标注 =====================
+    1. 顶部栏小头像：assets/images/nav-avatar.jpg，HTML 中 class="brand" 的 img。
+    2. 侧边栏大头像：assets/images/avatar.jpg，HTML 中 class="avatar-large"。
+    3. 首页大图：assets/images/hero.jpg，HTML 中 class="hero-img"。
+    4. 文章数据：assets/js/main.js 里的 CONFIG.posts / renderPosts 相关区域。
+    5. 音乐数据：assets/js/main.js 里的 CONFIG.playlist。
+    6. 颜色样式：assets/css/style.css，优先修改 :root 变量和末尾 FINAL FIX 区域。
+    =============================================================
+  -->
   <!-- 背景层：星星、雾光、流星 -->
   <canvas id="starsCanvas" aria-hidden="true"></canvas>
   <div class="mist-bg" aria-hidden="true"></div>
@@ -19,7 +30,8 @@
   <!-- 顶部导航栏：回到顶部时自动收起 -->
   <header class="site-nav" id="siteNav">
     <a class="brand" href="#aboutMe" aria-label="跳转到关于我">
-      <img src="assets/images/avatar.jpg" alt="Eason头像" />
+      <!-- 顶部栏左上角小头像：只改这里的 src 就能更换导航栏头像 -->
+      <img src="assets/images/nav-avatar.jpg" alt="Eason头像" />
       <span>Eason</span>
     </a>
 
@@ -144,7 +156,8 @@
       <section class="content">
         <section class="article-tools" aria-label="文章工具">
           <div class="article-title-block">
-            <strong>文章</strong>
+            <!-- 文章栏标题：这里控制文章列表上方的大标题 -->
+            <strong>全部文章</strong>
             <span id="articleTotalText">共 0 篇文章</span>
           </div>
           <div class="tool-actions">

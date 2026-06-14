@@ -12,6 +12,19 @@
   09 Init          初始化入口
 */
 
+
+/*
+  ===================== 修改入口说明 =====================
+  - CONFIG.siteStartDate：网站运行时间开始日期。
+  - CONFIG.typingTexts：首页打字机文案。
+  - CONFIG.playlist：音乐播放器歌曲、艺人、封面、音频文件。
+  - posts 数据：文章标题、日期、分类、标签、图片、内容链接。
+  - initThemePalette：调色板、深浅色、背景开关。
+  - initMusic：音乐播放器、歌单、循环模式。
+  - initPostsGallery：文章渲染、分类筛选、分页、单独文章页。
+  =======================================================
+*/
+
 /* 01 Data */
 const CONFIG = {
   siteStartDate: '2026-06-04',

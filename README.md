@@ -26,3 +26,12 @@ eason_blog_clean/
 
 ## 注意
 
+
+
+## 修改标注
+- 顶部栏小头像：`assets/images/nav-avatar.jpg`
+- 侧边栏大头像：`assets/images/avatar.jpg`
+- 首页大图：`assets/images/hero.jpg`
+- 文章/音乐数据：`assets/js/main.js`
+- 样式/动画：`assets/css/style.css`
+- 更多说明见：`docs/CODE_NOTES.md`
