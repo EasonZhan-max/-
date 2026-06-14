@@ -710,6 +710,45 @@ function initPostsGallery() {
 }
 
 
+/* 追加：电脑 / Pad 端侧边栏音乐区吸附顶部栏
+   作用：滚动到音乐模块后，只让 音乐、分类、标签统计 3 个模块吸附在顶部栏下方。
+   修改入口：想改吸附距离，改 CSS 里的 --sidebar-stick-top 或下面 updateSidebarStickyTop()。 */
+function initDesktopSidebarMusicSticky() {
+  const desktop = window.matchMedia('(min-width: 901px)');
+  const sidebar = document.querySelector('.sidebar');
+  const nav = document.getElementById('siteNav');
+  const music = document.getElementById('music');
+  const category = document.getElementById('categoryPanel');
+  const tags = document.getElementById('tagPanel');
+  if (!sidebar || !music || !category || !tags) return;
+
+  let pack = sidebar.querySelector('.sidebar-sticky-pack');
+  if (!pack) {
+    pack = document.createElement('div');
+    pack.className = 'sidebar-sticky-pack';
+    music.insertAdjacentElement('beforebegin', pack);
+    pack.append(music, category, tags);
+  }
+
+  const updateSidebarStickyTop = () => {
+    const navRect = nav?.getBoundingClientRect();
+    const navVisible = nav && !nav.classList.contains('nav-collapsed-top');
+    const navHeight = navVisible && navRect ? Math.max(0, Math.round(navRect.height)) : 0;
+    document.documentElement.style.setProperty('--sidebar-stick-top', `${navHeight + 18}px`);
+  };
+
+  const sync = () => {
+    document.body.classList.toggle('desktop-sidebar-music-sticky', desktop.matches);
+    updateSidebarStickyTop();
+  };
+
+  sync();
+  desktop.addEventListener?.('change', sync);
+  window.addEventListener('resize', sync, { passive: true });
+  window.addEventListener('scroll', updateSidebarStickyTop, { passive: true });
+}
+
+
 /* 09 Init */
 function initModals() {
   $$('[data-close-modal]').forEach((btn) => btn.addEventListener('click', () => closeModal(btn.closest('.modal'))));
@@ -739,6 +778,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initStars();
   initMeteors();
   initNavigation();
+  initDesktopSidebarMusicSticky();
   initMusic();
   initPostsGallery();
   initModals();

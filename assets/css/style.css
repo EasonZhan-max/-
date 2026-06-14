@@ -2156,3 +2156,114 @@ html[data-theme="light"] .tip-btn.primary {
 .brand img {
   object-fit: cover;
 }
+
+
+/* =========================================================
+   29 强制修复：电脑端侧边栏音乐区吸附 + 顶部栏按钮动画不越界
+   ========================================================= */
+:root { --sidebar-stick-top: 96px; }
+
+@media (min-width: 901px) {
+  /* 左侧栏整体不固定，跟文章同步滚动 */
+  body.desktop-sidebar-music-sticky .sidebar,
+  .sidebar {
+    position: relative !important;
+    top: auto !important;
+    align-self: start !important;
+    display: grid !important;
+    gap: 18px !important;
+    overflow: visible !important;
+  }
+
+  /* 音乐、分类、标签统计 三个模块组成吸附组 */
+  .sidebar-sticky-pack {
+    position: sticky !important;
+    top: var(--sidebar-stick-top) !important;
+    display: grid !important;
+    gap: 18px !important;
+    align-self: start !important;
+    z-index: 5 !important;
+  }
+
+  /* 顶部栏本体绝对不参与 hover 位移动画 */
+  .site-nav:not(.nav-collapsed-top),
+  .site-nav:not(.nav-collapsed-top):hover,
+  .site-nav:not(.nav-collapsed-top):focus-within {
+    transform: translateX(-50%) !important;
+  }
+
+  /* 只让顶部栏里面的按钮有选中反馈，且反馈限制在按钮内部 */
+  .site-nav .brand,
+  .site-nav .nav-links > a,
+  .site-nav .nav-link-btn,
+  .site-nav .icon-btn,
+  .music-play-tip .tip-btn {
+    position: relative !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    transform: none !important;
+    transition: background-color .18s ease, box-shadow .18s ease, border-color .18s ease, filter .18s ease, color .18s ease !important;
+  }
+
+  .site-nav .brand::after,
+  .site-nav .nav-links > a::after,
+  .site-nav .nav-link-btn::after,
+  .site-nav .icon-btn::after,
+  .music-play-tip .tip-btn::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 2px !important;
+    border-radius: inherit !important;
+    background: linear-gradient(135deg, rgba(255,255,255,.20), rgba(159,185,201,.16)) !important;
+    opacity: 0 !important;
+    transform: scale(.94) !important;
+    transition: opacity .18s ease, transform .18s ease !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+  }
+
+  .site-nav .brand:hover,
+  .site-nav .nav-links > a:hover,
+  .site-nav .nav-link-btn:hover,
+  .site-nav .icon-btn:hover,
+  .site-nav .nav-dropdown.open > .nav-link-btn,
+  .site-nav .icon-btn.active,
+  .music-play-tip .tip-btn:hover,
+  .music-play-tip .tip-btn:focus-visible {
+    transform: none !important;
+    background-color: rgba(159,185,201,.16) !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.14), 0 8px 22px rgba(0,0,0,.14) !important;
+    border-color: rgba(255,255,255,.22) !important;
+    filter: brightness(1.04) !important;
+  }
+
+  .site-nav .brand:hover::after,
+  .site-nav .nav-links > a:hover::after,
+  .site-nav .nav-link-btn:hover::after,
+  .site-nav .icon-btn:hover::after,
+  .site-nav .nav-dropdown.open > .nav-link-btn::after,
+  .site-nav .icon-btn.active::after,
+  .music-play-tip .tip-btn:hover::after,
+  .music-play-tip .tip-btn:focus-visible::after {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+  }
+
+  .site-nav .brand:active,
+  .site-nav .nav-links > a:active,
+  .site-nav .nav-link-btn:active,
+  .site-nav .icon-btn:active,
+  .music-play-tip .tip-btn:active {
+    transform: none !important;
+    filter: brightness(.92) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .sidebar-sticky-pack {
+    position: static !important;
+    top: auto !important;
+    display: grid !important;
+    gap: 18px !important;
+  }
+}
