@@ -2477,3 +2477,183 @@ html[data-theme="light"] .tip-btn.primary {
     padding: 6px 10px;
   }
 }
+
+
+/* =========================================================
+   31 最终修复：侧边栏不穿出 / 调色板无滚动条无模糊 / ICP 图标
+   修改位置：这一段放在文件末尾，优先级最高。
+   ========================================================= */
+
+/* 31.1 电脑端调色板：不显示浏览器滚动条，不要背景模糊 */
+@media (min-width: 901px) {
+  body.palette-open {
+    overflow: auto !important;
+  }
+  #paletteModal.modal {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    pointer-events: none !important;
+    padding-top: 92px !important;
+  }
+  #paletteModal.show {
+    pointer-events: auto !important;
+  }
+  #paletteModal .palette-modal-card {
+    width: 380px !important;
+    max-width: 380px !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    scrollbar-width: none !important;
+  }
+  #paletteModal .palette-modal-card::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+}
+
+/* 31.2 全部文章栏按钮：增加选中/悬浮反馈，但不飘出按钮范围 */
+.article-tools .tool-btn {
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background-color .18s ease, color .18s ease, filter .18s ease !important;
+}
+.article-tools .tool-btn::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 2px !important;
+  border-radius: inherit !important;
+  background: linear-gradient(135deg, rgba(255,255,255,.22), rgba(159,185,201,.18)) !important;
+  opacity: 0 !important;
+  transform: scale(.94) !important;
+  transition: opacity .18s ease, transform .18s ease !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+}
+.article-tools .tool-btn:hover,
+.article-tools .tool-btn:focus-visible,
+.article-tools .tool-btn.active {
+  transform: translateY(-1px) !important;
+  filter: brightness(1.04) !important;
+  border-color: rgba(255,255,255,.22) !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.12), 0 10px 24px rgba(0,0,0,.16) !important;
+}
+.article-tools .tool-btn:hover::after,
+.article-tools .tool-btn:focus-visible::after,
+.article-tools .tool-btn.active::after {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+}
+
+/* 31.3 顶部栏：按钮反馈只在按钮内部，避免飘到屏幕外 */
+@media (min-width: 901px) {
+  .site-nav,
+  .site-nav:hover,
+  .site-nav:focus-within {
+    transform: translateX(-50%) !important;
+    overflow: visible !important;
+  }
+  .site-nav .brand,
+  .site-nav .nav-links > a,
+  .site-nav .nav-link-btn,
+  .site-nav .nav-actions .icon-btn,
+  .music-play-tip .tip-btn {
+    position: relative !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    transform: none !important;
+  }
+  .site-nav .brand:hover,
+  .site-nav .nav-links > a:hover,
+  .site-nav .nav-link-btn:hover,
+  .site-nav .nav-actions .icon-btn:hover,
+  .site-nav .nav-dropdown.open > .nav-link-btn,
+  .site-nav .nav-actions .icon-btn.active,
+  .music-play-tip .tip-btn:hover {
+    transform: none !important;
+  }
+}
+
+/* 31.4 电脑端侧边栏：
+   - 个人资料/公告跟文章同步滚动
+   - 音乐/分类/标签统计滚到顶部栏下方时吸附
+   - 到正文底部时停止，不再穿到“关于我”区域 */
+:root { --sidebar-stick-top: 112px; }
+@media (min-width: 901px) {
+  .layout {
+    align-items: stretch !important;
+    margin-bottom: 120px !important;
+    overflow: visible !important;
+  }
+  .content {
+    min-width: 0 !important;
+  }
+  .sidebar {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    display: grid !important;
+    grid-template-rows: auto auto 1fr !important;
+    align-self: stretch !important;
+    height: auto !important;
+    min-height: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    gap: 18px !important;
+  }
+  .sidebar-pin-group,
+  .sidebar-sticky-pack {
+    position: sticky !important;
+    top: var(--sidebar-stick-top) !important;
+    align-self: start !important;
+    display: grid !important;
+    gap: 18px !important;
+    z-index: 6 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 0 !important;
+  }
+  .sidebar-pin-group > .panel,
+  .sidebar-sticky-pack > .panel {
+    margin: 0 !important;
+  }
+  .info-sections {
+    margin-top: 120px !important;
+    position: relative !important;
+    z-index: 8 !important;
+  }
+}
+@media (max-width: 900px) {
+  .layout { margin-bottom: 70px !important; }
+  .sidebar-pin-group,
+  .sidebar-sticky-pack {
+    position: static !important;
+    top: auto !important;
+    display: grid !important;
+    gap: 18px !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  .info-sections { margin-top: 0 !important; }
+}
+
+/* 31.5 页脚萌 ICP 图标 */
+.icp-link {
+  gap: 7px;
+}
+.icp-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: inline-block;
+  flex: 0 0 auto;
+}
+@media (max-width: 680px) {
+  .icp-link { font-size: 13px; padding: 6px 10px; }
+  .icp-icon { width: 16px; height: 16px; }
+}

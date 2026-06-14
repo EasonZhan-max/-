@@ -746,7 +746,7 @@ function initDesktopSidebarMusicSticky() {
 
     const navVisible = nav && !nav.classList.contains('nav-collapsed-top');
     const navHeight = navVisible ? Math.max(0, Math.round(nav.getBoundingClientRect().height)) : 0;
-    const safeTop = Math.max(16, navHeight + 16);
+    const safeTop = Math.max(28, navHeight + 30);
     document.documentElement.style.setProperty('--sidebar-stick-top', `${safeTop}px`);
   };
 
