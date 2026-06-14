@@ -8,7 +8,7 @@
   <link rel="icon" type="image/jpeg" href="assets/images/avatar.jpg" />
   <link rel="apple-touch-icon" href="assets/images/avatar.jpg" />
   <meta name="apple-mobile-web-app-title" content="Eason的小站" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20260614-sidebar-music-stick-v2" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260614-sidebar-pin-palette-buttons3" />
 
   <style id="eason-desktop-sidebar-sync-fix">
     /* ===== 追加修复：桌面端侧边栏滚动同步 + 顶部栏按钮悬浮范围修复 ===== */
@@ -218,7 +218,8 @@
           <a class="more" href="#aboutMe">了解更多</a>
         </section>
 
-        <section class="panel" id="music">
+        <div class="sidebar-pin-group" id="sidebarPinGroup">
+<section class="panel" id="music">
           <h3 class="panel-title">音乐</h3>
           <div class="mini-player">
             <div class="music-top">
@@ -250,6 +251,7 @@
 
         <section class="panel" id="categoryPanel"><h3 class="panel-title">分类</h3><div class="category-list" id="categoryStats"></div></section>
         <section class="panel" id="tagPanel"><h3 class="panel-title">标签统计</h3><div class="tag-cloud-stats" id="tagStats"></div></section>
+        </div>
       </aside>
 
       <!-- 主内容：文章筛选、文章列表、分页 -->
@@ -362,7 +364,7 @@
 
   <div class="top-music-popover" id="topMusicPopover" aria-hidden="true"><div class="top-music-card"><div class="top-music-main"><img class="top-music-cover" id="topMusicCover" src="assets/images/cover-yidian.jpg" alt="音乐封面" /><div class="top-music-info"><div class="top-music-title" id="topMusicTitle">一点</div><div class="top-music-sub" id="topMusicSub">muyoi pezzi</div><div class="top-music-time" id="topMusicTime">0:00 / 0:00</div></div><button class="top-close" type="button" id="topMusicClose" aria-label="关闭音乐弹窗">×</button></div><input class="top-progress" id="topMusicProgress" type="range" min="0" max="100" value="0" /><div class="top-music-controls"><button type="button" id="topMusicMode">循环</button><button type="button" id="topMusicPrev">上一首</button><button type="button" class="top-play" id="topMusicPlay">播放</button><button type="button" id="topMusicNext">下一首</button><button type="button" id="topMusicList">歌单</button></div><div class="top-playlist-panel" id="topMusicPlaylist"></div></div></div>
 
-  <script src="assets/js/main.js?v=20260614-sidebar-music-stick-v2"></script>
+  <script src="assets/js/main.js?v=20260614-sidebar-pin-palette-buttons3"></script>
 
   <script>
   /* 兜底修复：确保文章卡片一定可以点进独立页面，并能返回原浏览位置 */

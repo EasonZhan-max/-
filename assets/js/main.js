@@ -711,8 +711,11 @@ function initPostsGallery() {
 
 
 /* 追加：电脑 / Pad 端侧边栏音乐区吸附顶部栏
-   作用：滚动到音乐模块后，只让 音乐、分类、标签统计 3 个模块吸附在顶部栏下方。
-   修改入口：想改吸附距离，改 CSS 里的 --sidebar-stick-top 或下面 updateSidebarStickyTop()。 */
+   作用：侧边栏跟文章一起滚动；滚到音乐模块时，只让 音乐 / 分类 / 标签统计 3 个模块吸附在顶部栏下方。
+   修改入口：
+   1. 吸附间距：CSS 变量 --sidebar-stick-top
+   2. 三个吸附模块：HTML 里的 #sidebarPinGroup
+*/
 function initDesktopSidebarMusicSticky() {
   const desktop = window.matchMedia('(min-width: 901px)');
   const sidebar = document.querySelector('.sidebar');
@@ -720,25 +723,35 @@ function initDesktopSidebarMusicSticky() {
   const music = document.getElementById('music');
   const category = document.getElementById('categoryPanel');
   const tags = document.getElementById('tagPanel');
+
   if (!sidebar || !music || !category || !tags) return;
 
-  let pack = sidebar.querySelector('.sidebar-sticky-pack');
+  // 如果旧 HTML 没有包裹层，这里自动补一个；新版本 HTML 已经自带。
+  let pack = sidebar.querySelector('.sidebar-pin-group') || sidebar.querySelector('.sidebar-sticky-pack');
   if (!pack) {
     pack = document.createElement('div');
-    pack.className = 'sidebar-sticky-pack';
+    pack.className = 'sidebar-pin-group';
     music.insertAdjacentElement('beforebegin', pack);
     pack.append(music, category, tags);
+  } else {
+    pack.classList.add('sidebar-pin-group');
+    pack.classList.remove('sidebar-sticky-pack');
   }
 
   const updateSidebarStickyTop = () => {
-    const navRect = nav?.getBoundingClientRect();
+    if (!desktop.matches) {
+      document.documentElement.style.setProperty('--sidebar-stick-top', '0px');
+      return;
+    }
+
     const navVisible = nav && !nav.classList.contains('nav-collapsed-top');
-    const navHeight = navVisible && navRect ? Math.max(0, Math.round(navRect.height)) : 0;
-    document.documentElement.style.setProperty('--sidebar-stick-top', `${navHeight + 18}px`);
+    const navHeight = navVisible ? Math.max(0, Math.round(nav.getBoundingClientRect().height)) : 0;
+    const safeTop = Math.max(16, navHeight + 16);
+    document.documentElement.style.setProperty('--sidebar-stick-top', `${safeTop}px`);
   };
 
   const sync = () => {
-    document.body.classList.toggle('desktop-sidebar-music-sticky', desktop.matches);
+    document.body.classList.toggle('desktop-sidebar-pin-ready', desktop.matches);
     updateSidebarStickyTop();
   };
 
