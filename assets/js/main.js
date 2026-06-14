@@ -41,6 +41,15 @@ const fmtTime = (sec) => {
   const s = Math.floor(sec % 60);
   return `${m}:${String(s).padStart(2, '0')}`;
 };
+
+const fmtRunTime = (ms) => {
+  const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  return `${days}天 ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+};
 const openModal = (id) => {
   const modal = typeof id === 'string' ? $(id) : id;
   if (!modal) return;
@@ -697,12 +706,18 @@ function initModals() {
 }
 
 function initFooterStats() {
-  const days = Math.max(1, Math.ceil((Date.now() - new Date(CONFIG.siteStartDate).getTime()) / 86400000));
   const articleCount = $$('.post').length;
-  $('#runFooter') && ($('#runFooter').textContent = String(days));
-  $('#lastVisit') && ($('#lastVisit').textContent = '2026-06-10');
-  $('#siteInfoArticleCount') && ($('#siteInfoArticleCount').textContent = String(articleCount));
-  $('#siteInfoRunDays') && ($('#siteInfoRunDays').textContent = String(days));
+  const startTime = new Date(CONFIG.siteStartDate).getTime();
+  const updateFooterStats = () => {
+    const elapsed = Date.now() - startTime;
+    const days = Math.max(1, Math.ceil(elapsed / 86400000));
+    $('#runFooter') && ($('#runFooter').textContent = fmtRunTime(elapsed));
+    $('#lastVisit') && ($('#lastVisit').textContent = '2026-06-10');
+    $('#siteInfoArticleCount') && ($('#siteInfoArticleCount').textContent = String(articleCount));
+    $('#siteInfoRunDays') && ($('#siteInfoRunDays').textContent = String(days));
+  };
+  updateFooterStats();
+  window.setInterval(updateFooterStats, 1000);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -2058,3 +2058,24 @@ html[data-theme="light"] .tip-btn.primary {
     height: 36px !important;
   }
 }
+
+
+/* 27 Site rename/avatar/runtime + desktop hover feedback */
+@media (hover: hover) and (pointer: fine) and (min-width: 901px) {
+  .panel,
+  .article-tools,
+  .site-nav {
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .panel:hover,
+  .article-tools:hover,
+  .site-nav:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, .24);
+  }
+}
+#runFooter {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .02em;
+}
