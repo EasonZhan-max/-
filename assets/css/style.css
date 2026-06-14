@@ -2446,3 +2446,34 @@ html[data-theme="light"] .tip-btn.primary {
     overflow: visible !important;
   }
 }
+
+
+/* 追加：页脚萌 ICP 链接 */
+.icp-link-wrap {
+  margin: 8px 0 0;
+  text-align: center;
+}
+.icp-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: var(--muted);
+  text-decoration: none;
+  border: 1px solid rgba(159,185,201,.18);
+  background: rgba(159,185,201,.08);
+  transition: transform .18s ease, color .18s ease, border-color .18s ease, background .18s ease;
+}
+.icp-link:hover {
+  color: var(--text);
+  transform: translateY(-1px);
+  border-color: rgba(159,185,201,.36);
+  background: rgba(159,185,201,.14);
+}
+@media (max-width: 680px) {
+  .icp-link {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+}
