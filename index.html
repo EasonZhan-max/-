@@ -8,7 +8,107 @@
   <link rel="icon" type="image/jpeg" href="assets/images/avatar.jpg" />
   <link rel="apple-touch-icon" href="assets/images/avatar.jpg" />
   <meta name="apple-mobile-web-app-title" content="Eason的小站" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20260614-easonsite-avatar-hover-runtime" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260614-desktop-sidebar-sync-topbarfix" />
+
+  <style id="eason-desktop-sidebar-sync-fix">
+    /* ===== 追加修复：桌面端侧边栏滚动同步 + 顶部栏按钮悬浮范围修复 ===== */
+    :root { --sidebar-stick-top: 98px; }
+
+    @media (min-width: 901px) {
+      .layout {
+        align-items: start !important;
+      }
+      .sidebar {
+        position: relative !important;
+        top: auto !important;
+        align-self: start !important;
+        display: grid !important;
+        gap: 18px !important;
+      }
+      .sidebar-sticky-pack {
+        position: sticky;
+        top: var(--sidebar-stick-top);
+        display: grid;
+        gap: 18px;
+        align-self: start;
+        z-index: 4;
+      }
+
+      /* 顶部栏按钮动画只在按钮内部显示，避免飘出屏幕 */
+      .site-nav .nav-links a,
+      .site-nav .nav-link-btn,
+      .site-nav .icon-btn,
+      .music-play-tip .tip-btn {
+        position: relative !important;
+        overflow: hidden !important;
+        isolation: isolate;
+        transform: translateZ(0);
+        transition: transform .18s ease, color .18s ease, border-color .18s ease, background-color .18s ease, box-shadow .18s ease !important;
+      }
+      .site-nav .nav-links a::after,
+      .site-nav .nav-link-btn::after,
+      .site-nav .icon-btn::after,
+      .music-play-tip .tip-btn::after {
+        content: "";
+        position: absolute;
+        inset: 1px;
+        border-radius: inherit;
+        background: linear-gradient(135deg, rgba(255,255,255,.18), rgba(159,185,201,.12));
+        opacity: 0;
+        transform: scale(.96);
+        transition: opacity .18s ease, transform .18s ease;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .site-nav .nav-links a:hover,
+      .site-nav .nav-link-btn:hover,
+      .site-nav .icon-btn:hover,
+      .music-play-tip .tip-btn:hover,
+      .site-nav .nav-links a:focus-visible,
+      .site-nav .nav-link-btn:focus-visible,
+      .site-nav .icon-btn:focus-visible,
+      .music-play-tip .tip-btn:focus-visible {
+        transform: translateY(-1px) !important;
+        box-shadow: 0 10px 24px rgba(0,0,0,.14);
+      }
+      .site-nav .nav-links a:hover::after,
+      .site-nav .nav-link-btn:hover::after,
+      .site-nav .icon-btn:hover::after,
+      .music-play-tip .tip-btn:hover::after,
+      .site-nav .nav-links a:focus-visible::after,
+      .site-nav .nav-link-btn:focus-visible::after,
+      .site-nav .icon-btn:focus-visible::after,
+      .music-play-tip .tip-btn:focus-visible::after {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .site-nav .nav-links a::before,
+      .site-nav .nav-link-btn::before,
+      .site-nav .icon-btn::before {
+        left: auto !important;
+        right: auto !important;
+        max-width: 100% !important;
+      }
+      .site-nav .nav-links,
+      .site-nav .nav-actions,
+      .site-nav .nav-dropdown,
+      .site-nav .icon-btn,
+      .site-nav .nav-link-btn {
+        overflow: visible;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .sidebar-sticky-pack {
+        position: static !important;
+        top: auto !important;
+        display: grid;
+        gap: 18px;
+      }
+    }
+  </style>
+
 </head>
 <body>
 
@@ -262,7 +362,7 @@
 
   <div class="top-music-popover" id="topMusicPopover" aria-hidden="true"><div class="top-music-card"><div class="top-music-main"><img class="top-music-cover" id="topMusicCover" src="assets/images/cover-yidian.jpg" alt="音乐封面" /><div class="top-music-info"><div class="top-music-title" id="topMusicTitle">一点</div><div class="top-music-sub" id="topMusicSub">muyoi pezzi</div><div class="top-music-time" id="topMusicTime">0:00 / 0:00</div></div><button class="top-close" type="button" id="topMusicClose" aria-label="关闭音乐弹窗">×</button></div><input class="top-progress" id="topMusicProgress" type="range" min="0" max="100" value="0" /><div class="top-music-controls"><button type="button" id="topMusicMode">循环</button><button type="button" id="topMusicPrev">上一首</button><button type="button" class="top-play" id="topMusicPlay">播放</button><button type="button" id="topMusicNext">下一首</button><button type="button" id="topMusicList">歌单</button></div><div class="top-playlist-panel" id="topMusicPlaylist"></div></div></div>
 
-  <script src="assets/js/main.js?v=20260614-easonsite-avatar-hover-runtime"></script>
+  <script src="assets/js/main.js?v=20260614-desktop-sidebar-sync-topbarfix"></script>
 
   <script>
   /* 兜底修复：确保文章卡片一定可以点进独立页面，并能返回原浏览位置 */
@@ -386,6 +486,61 @@
       const found = posts.find((post, index) => getSlug(post, index) === slug);
       if (found) openPost(found, false);
     });
+  })();
+  </script>
+
+
+  <script>
+  /* 追加修复：桌面端侧边栏在滚动到音乐区后吸附顶部栏，只保留音乐/分类/标签统计跟随文章同步滚动 */
+  (() => {
+    const desktopMedia = window.matchMedia('(min-width: 901px)');
+    const nav = document.getElementById('siteNav');
+    const sidebar = document.querySelector('.sidebar');
+    const music = document.getElementById('music');
+    const category = document.getElementById('categoryPanel');
+    const tag = document.getElementById('tagPanel');
+    let pack = null;
+
+    function ensurePack() {
+      if (!sidebar || !music || !category || !tag) return null;
+      pack = sidebar.querySelector('.sidebar-sticky-pack');
+      if (!pack) {
+        pack = document.createElement('div');
+        pack.className = 'sidebar-sticky-pack';
+        music.insertAdjacentElement('beforebegin', pack);
+        pack.append(music, category, tag);
+      }
+      return pack;
+    }
+
+    function applySidebarMode() {
+      const stickyPack = ensurePack();
+      if (!stickyPack || !sidebar) return;
+      if (desktopMedia.matches) {
+        sidebar.classList.add('desktop-sidebar-sync');
+      } else {
+        sidebar.classList.remove('desktop-sidebar-sync');
+      }
+      updateStickyTop();
+    }
+
+    function updateStickyTop() {
+      const root = document.documentElement;
+      if (!desktopMedia.matches) {
+        root.style.setProperty('--sidebar-stick-top', '0px');
+        return;
+      }
+      const navHeight = nav ? Math.round(nav.getBoundingClientRect().height) : 78;
+      const navHidden = nav?.classList.contains('nav-collapsed-top');
+      const top = navHidden ? 18 : (navHeight + 14);
+      root.style.setProperty('--sidebar-stick-top', `${top}px`);
+    }
+
+    applySidebarMode();
+    updateStickyTop();
+    window.addEventListener('resize', applySidebarMode, { passive: true });
+    window.addEventListener('scroll', updateStickyTop, { passive: true });
+    window.addEventListener('load', applySidebarMode, { once: true });
   })();
   </script>
 
